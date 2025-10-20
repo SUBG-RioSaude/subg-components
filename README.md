@@ -24,8 +24,6 @@
 
 ## 📦 Instalação
 
-### 1. Instalar o pacote
-
 ```bash
 pnpm add @subg-riosaude/subg-components
 ```
@@ -41,14 +39,6 @@ npm install @subg-riosaude/subg-components
 yarn add @subg-riosaude/subg-components
 ```
 </details>
-
-### 2. Instalar peer dependencies
-
-Certifique-se de que seu projeto possui as seguintes dependências:
-
-```bash
-pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 tailwindcss@^4.0.0 lucide-react@^0.540.0
-```
 
 ---
 
