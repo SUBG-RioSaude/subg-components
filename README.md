@@ -25,6 +25,12 @@
 
 ## 📦 Instalação
 
+### Instalação via NPM (Recomendado)
+
+> ⚠️ **Importante**: O pacote ainda não foi publicado no NPM. Siga as instruções abaixo para instalação local ou aguarde a publicação oficial.
+
+**Após a publicação no NPM:**
+
 ```bash
 pnpm add @subg-riosaude/subg-components
 ```
@@ -40,6 +46,141 @@ npm install @subg-riosaude/subg-components
 yarn add @subg-riosaude/subg-components
 ```
 </details>
+
+### Instalação Local (Durante Desenvolvimento)
+
+**Opção 1: Usando `pnpm link`**
+
+1. No diretório do pacote `subg-components`:
+```bash
+cd /caminho/para/subg-components
+pnpm install
+pnpm build
+pnpm link --global
+```
+
+2. No seu projeto:
+```bash
+cd /caminho/para/seu-projeto
+pnpm link --global @subg-riosaude/subg-components
+```
+
+**Opção 2: Usando caminho local no `package.json`**
+
+```json
+{
+  "dependencies": {
+    "@subg-riosaude/subg-components": "file:../subg-components"
+  }
+}
+```
+
+Depois execute:
+```bash
+pnpm install
+```
+
+**Opção 3: Instalando diretamente do GitHub**
+
+```bash
+pnpm add https://github.com/SUBG-RioSaude/subg-components
+```
+
+### 🚀 Como Publicar no NPM
+
+Para os mantenedores do projeto, siga estes passos para publicar:
+
+#### Pré-requisitos
+
+1. **Criar conta no NPM**: [npmjs.com/signup](https://www.npmjs.com/signup)
+2. **Criar organização** `@subg-riosaude` no NPM (se não existir)
+3. **Verificar package.json**:
+   - ✅ `name`: `@subg-riosaude/subg-components`
+   - ✅ `version`: Atualizada (ex: `1.1.0`)
+   - ✅ `main`, `module`, `types`: Configurados
+   - ✅ `exports`: Definidos corretamente
+   - ✅ `files`: `["dist", "README.md"]`
+   - ✅ `repository`: URL do GitHub
+   - ✅ `peerDependencies`: Declaradas
+
+#### Passos para Publicação
+
+1. **Fazer login no NPM**
+```bash
+npm login
+# Digite seu username, password e email
+```
+
+2. **Atualizar versão** (seguindo [Semantic Versioning](https://semver.org/))
+```bash
+# Patch (1.1.0 -> 1.1.1) - correções de bugs
+npm version patch
+
+# Minor (1.1.0 -> 1.2.0) - novas funcionalidades
+npm version minor
+
+# Major (1.1.0 -> 2.0.0) - breaking changes
+npm version major
+```
+
+3. **Verificar build**
+```bash
+pnpm install
+pnpm build
+```
+
+4. **Verificar o que será publicado**
+```bash
+npm pack --dry-run
+```
+
+5. **Publicar o pacote**
+```bash
+npm publish --access public
+```
+
+6. **Fazer push das tags**
+```bash
+git push origin main --tags
+```
+
+#### Verificar Publicação
+
+Após publicar, verifique:
+- 📦 **NPM**: [npmjs.com/package/@subg-riosaude/subg-components](https://www.npmjs.com/package/@subg-riosaude/subg-components)
+- 🔍 **Bundle Size**: [bundlephobia.com](https://bundlephobia.com/package/@subg-riosaude/subg-components)
+
+#### Automatizar com GitHub Actions (Opcional)
+
+Crie `.github/workflows/publish.yml`:
+
+```yaml
+name: Publish to NPM
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm install
+      - run: pnpm build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+> 📝 **Nota**: Adicione seu `NPM_TOKEN` nos secrets do GitHub (Settings > Secrets and variables > Actions).
 
 ---
 
