@@ -74,7 +74,7 @@ Esta biblioteca requer que seu projeto tenha as seguintes dependências instalad
 pnpm add react@^19.0.0 react-dom@^19.0.0
 ```
 
-#### 2️⃣ TailwindCSS
+#### 2️⃣ TailwindCSS v4
 
 <div align="center">
   <a href="https://tailwindcss.com/docs/installation/using-vite" target="_blank">
@@ -83,12 +83,11 @@ pnpm add react@^19.0.0 react-dom@^19.0.0
     <strong>Instalar TailwindCSS v4 com Vite</strong>
   </a>
   <br/>
-  <sub>Framework CSS utilitário</sub>
+  <sub>Framework CSS utilitário (como plugin Vite)</sub>
 </div>
 
 ```bash
-pnpm add -D tailwindcss@^4.0.0 postcss autoprefixer
-npx tailwindcss init -p
+pnpm add tailwindcss @tailwindcss/vite
 ```
 
 #### 3️⃣ shadcn/ui
@@ -158,79 +157,63 @@ Se você já conhece as ferramentas e quer instalar tudo de uma vez:
 
 ```bash
 # Instalar dependências de produção
-pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 @subg-riosaude/subg-components
+pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 tailwindcss @tailwindcss/vite @subg-riosaude/subg-components
 
 # Instalar dependências de desenvolvimento
-pnpm add -D tailwindcss@^4.0.0 postcss autoprefixer @types/node
-
-# Inicializar TailwindCSS
-npx tailwindcss init -p
+pnpm add -D @types/node
 
 # Inicializar shadcn/ui
-npx shadcn@latest init
+pnpm dlx shadcn@latest init
 ```
 
-> ⚠️ **Importante**: Mesmo instalando tudo de uma vez, você ainda precisa configurar o TailwindCSS e shadcn/ui manualmente conforme a [seção de Configuração Inicial](#️-configuração-inicial).
+> ⚠️ **Importante**: Mesmo instalando tudo de uma vez, você ainda precisa configurar o TailwindCSS v4 e shadcn/ui manualmente conforme a [seção de Configuração Inicial](#️-configuração-inicial).
 
 ---
 
 ## ⚙️ Configuração Inicial
 
-> 💡 **Pré-requisito**: Este guia assume que você já instalou React, TailwindCSS v4 e shadcn/ui conforme a [seção anterior](#-antes-de-começar).
+> 💡 **Pré-requisito**: Este guia assume que você já instalou as dependências conforme a [seção anterior](#-antes-de-começar).
 
 ### Guia Completo para Vite + React
 
 Se você ainda não configurou TailwindCSS v4 e shadcn/ui no seu projeto Vite, siga os passos abaixo:
 
-#### 1️⃣ Configurar TailwindCSS v4 no Vite
+#### 1️⃣ Configurar TailwindCSS v4 no Vite (Como Plugin)
 
 Siga o guia oficial: [TailwindCSS with Vite](https://tailwindcss.com/docs/installation/using-vite)
 
 ```bash
-# 1. Instalar TailwindCSS
-pnpm add -D tailwindcss postcss autoprefixer
-
-# 2. Inicializar configuração
-npx tailwindcss init -p
+# Instalar TailwindCSS v4 e o plugin Vite
+pnpm add tailwindcss @tailwindcss/vite
 ```
 
-**Configurar `tailwind.config.js`:**
+**Configurar `vite.config.ts`:**
 
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    // IMPORTANTE: Adicione o caminho dos componentes da biblioteca
-    './node_modules/@subg-riosaude/subg-components/dist/**/*.{js,ts,jsx,tsx}',
+```ts
+import path from 'path'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(), // Plugin do TailwindCSS v4
   ],
-  theme: {
-    extend: {
-      colors: {
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
-      },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
   },
-  plugins: [],
-}
+})
 ```
 
-**Adicionar diretivas Tailwind no `src/index.css`:**
+**Configurar `src/index.css`:**
+
+No TailwindCSS v4, você usa `@import` ao invés de `@tailwind`:
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -258,13 +241,37 @@ export default {
 }
 ```
 
+> 📝 **Nota**: No TailwindCSS v4, **NÃO é necessário** criar `tailwind.config.js`. A configuração é feita diretamente no CSS usando `@theme` ou via plugin Vite.
+
 #### 2️⃣ Configurar shadcn/ui no Vite
 
 Siga o guia oficial: [shadcn/ui with Vite](https://ui.shadcn.com/docs/installation/vite)
 
+**Instalar @types/node:**
+
 ```bash
-# Inicializar shadcn/ui
-npx shadcn@latest init
+pnpm add -D @types/node
+```
+
+**Configurar `tsconfig.json`:**
+
+Adicione o `baseUrl` e `paths` para path aliases:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+**Inicializar shadcn/ui:**
+
+```bash
+pnpm dlx shadcn@latest init
 ```
 
 Durante a inicialização, responda as perguntas:
@@ -281,32 +288,7 @@ Isso criará automaticamente:
 - `src/lib/utils.ts` - Utilitários
 - Atualização do `tsconfig.json` com path aliases
 
-#### 3️⃣ Configurar Path Aliases no Vite
-
-Atualize seu `vite.config.ts` para reconhecer os aliases do shadcn:
-
-```ts
-import path from 'path'
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-})
-```
-
-**Instalar @types/node** (se necessário):
-
-```bash
-pnpm add -D @types/node
-```
-
-#### 4️⃣ Estruturar seu layout principal
+#### 3️⃣ Estruturar seu layout principal
 
 ```tsx
 // src/App.tsx ou src/layouts/MainLayout.tsx
