@@ -1,6 +1,6 @@
 {
   "name": "@subg-dev/subg-components",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Componentes reutilizáveis da SUBG - Sistema de Sidebar e Breadcrumb",
   "type": "module",
   "main": "./dist/index.js",
