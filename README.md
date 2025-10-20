@@ -363,20 +363,107 @@ Isso criará automaticamente:
 - `src/lib/utils.ts` - Utilitários
 - Atualização do `tsconfig.json` com path aliases
 
-#### 3️⃣ Estruturar seu layout principal
+#### 3️⃣ Configurar React Router
+
+Esta biblioteca utiliza React Router para navegação. Instale e configure:
+
+```bash
+pnpm add react-router-dom@^7.0.0
+```
+
+**Configurar `src/main.tsx`:**
 
 ```tsx
-// src/App.tsx ou src/layouts/MainLayout.tsx
-import { SidebarProvider } from '@subg-riosaude/subg-components'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App.tsx'
+import './index.css'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
+)
+```
+
+**Estruturar `src/App.tsx` com rotas:**
+
+```tsx
+import { Routes, Route } from 'react-router-dom'
+import { MainLayout } from './layouts/MainLayout'
+import { Dashboard } from './pages/Dashboard'
+import { Users } from './pages/Users'
+import { Settings } from './pages/Settings'
 
 function App() {
   return (
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="users" element={<Users />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default App
+```
+
+**Criar `src/layouts/MainLayout.tsx`:**
+
+```tsx
+import { Outlet } from 'react-router-dom'
+import {
+  AppSidebar,
+  PageBreadcrumb,
+  SidebarProvider,
+  SidebarInset,
+} from '@subg-riosaude/subg-components'
+import { Home, Users, Settings } from 'lucide-react'
+
+export function MainLayout() {
+  const navItems = [
+    { title: 'Início', url: '/', icon: Home },
+    { title: 'Usuários', url: '/users', icon: Users },
+    { title: 'Configurações', url: '/settings', icon: Settings },
+  ]
+
+  const logoConfig = {
+    mainLogoUrl: '/logo.png',
+    mainLogoAlt: 'Minha Empresa',
+    badgeText: 'Admin',
+    logoLink: '/',
+  }
+
+  return (
     <SidebarProvider>
-      {/* Seus componentes aqui */}
+      <AppSidebar navItems={navItems} logoConfig={logoConfig} />
+      <SidebarInset>
+        {/* Header com Breadcrumb */}
+        <header className="sticky top-0 z-10 flex h-16 items-center gap-2 border-b bg-white px-4">
+          <PageBreadcrumb
+            labelMap={{
+              'users': 'Usuários',
+              'settings': 'Configurações',
+            }}
+          />
+        </header>
+
+        {/* Conteúdo das páginas */}
+        <main className="flex-1 overflow-auto p-6">
+          <Outlet />
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   )
 }
 ```
+
+> 💡 **Dica**: Use `<Outlet />` do React Router para renderizar as páginas filhas dentro do layout.
 
 ---
 
@@ -643,28 +730,137 @@ const CustomFooter = () => (
 )
 ```
 
-### Integração com React Router
+### Integração Completa com React Router
 
 ```tsx
 // src/App.tsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { MainLayout } from './layouts/MainLayout'
 import { Dashboard } from './pages/Dashboard'
 import { ContratosList } from './pages/Contratos/List'
 import { ContratosForm } from './pages/Contratos/Form'
+import { ContratosDetail } from './pages/Contratos/Detail'
+import { NotFound } from './pages/NotFound'
 
 function App() {
   return (
-    <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/contratos" element={<ContratosList />} />
-          <Route path="/contratos/cadastrar" element={<ContratosForm />} />
-          <Route path="/contratos/:id" element={<ContratosDetail />} />
-        </Routes>
-      </MainLayout>
-    </BrowserRouter>
+    <Routes>
+      {/* Rotas com Layout */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Dashboard />} />
+
+        {/* Rotas de Contratos */}
+        <Route path="contratos">
+          <Route index element={<ContratosList />} />
+          <Route path="cadastrar" element={<ContratosForm />} />
+          <Route path=":id" element={<ContratosDetail />} />
+          <Route path=":id/editar" element={<ContratosForm />} />
+        </Route>
+
+        {/* Rota 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default App
+```
+
+### Rotas Protegidas com Autenticação
+
+```tsx
+// src/components/ProtectedRoute.tsx
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
+
+export function ProtectedRoute() {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return <div>Carregando...</div>
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
+  return <Outlet />
+}
+```
+
+```tsx
+// src/App.tsx - Com rotas protegidas
+import { Routes, Route } from 'react-router-dom'
+import { MainLayout } from './layouts/MainLayout'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { Login } from './pages/Login'
+import { Dashboard } from './pages/Dashboard'
+
+function App() {
+  return (
+    <Routes>
+      {/* Rota pública */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Rotas protegidas */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="contratos" element={<ContratosList />} />
+          <Route path="fornecedores" element={<FornecedoresList />} />
+        </Route>
+      </Route>
+    </Routes>
+  )
+}
+
+export default App
+```
+
+### Navegação Programática
+
+```tsx
+// src/pages/Contratos/List.tsx
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+
+export function ContratosList() {
+  const navigate = useNavigate()
+
+  const handleEdit = (id: string) => {
+    navigate(`/contratos/${id}/editar`)
+  }
+
+  const handleCreate = () => {
+    navigate('/contratos/cadastrar')
+  }
+
+  return (
+    <div>
+      <Button onClick={handleCreate}>Novo Contrato</Button>
+      {/* Lista de contratos */}
+    </div>
+  )
+}
+```
+
+### Parâmetros de Rota e Busca
+
+```tsx
+// src/pages/Contratos/Detail.tsx
+import { useParams, useSearchParams } from 'react-router-dom'
+
+export function ContratosDetail() {
+  const { id } = useParams() // Pega o :id da URL
+  const [searchParams] = useSearchParams()
+  const tab = searchParams.get('tab') // ?tab=documentos
+
+  return (
+    <div>
+      <h1>Contrato #{id}</h1>
+      <p>Tab ativa: {tab || 'geral'}</p>
+    </div>
   )
 }
 ```
