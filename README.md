@@ -15,6 +15,7 @@
 - [Componentes](#-componentes)
   - [AppSidebar](#appsidebar)
   - [PageBreadcrumb](#pagebreadcrumb)
+- [Uso Avançado da Sidebar](#-uso-avançado-da-sidebar)
 - [Exemplos Completos](#-exemplos-completos)
 - [API Reference](#-api-reference)
 - [Troubleshooting](#-troubleshooting)
@@ -632,6 +633,241 @@ import { PageBreadcrumb } from '@subg-riosaude/subg-components'
   ]}
 />
 ```
+
+---
+
+## 🎯 Uso Avançado da Sidebar
+
+### Hook `useSidebar`
+
+O hook `useSidebar` fornece controle total sobre o estado da sidebar:
+
+```tsx
+import { useSidebar } from '@subg-riosaude/subg-components'
+
+function MyComponent() {
+  const {
+    state,           // "expanded" | "collapsed"
+    open,            // boolean - estado desktop
+    setOpen,         // (value: boolean) => void
+    openMobile,      // boolean - estado mobile
+    setOpenMobile,   // (value: boolean) => void
+    isMobile,        // boolean - detecta mobile
+    toggleSidebar,   // () => void - alterna estado
+  } = useSidebar()
+
+  return (
+    <div>
+      <p>Sidebar está: {open ? 'aberta' : 'fechada'}</p>
+      <button onClick={toggleSidebar}>Toggle Sidebar</button>
+    </div>
+  )
+}
+```
+
+### Componente `SidebarTrigger`
+
+Use `SidebarTrigger` para adicionar um botão de toggle customizado:
+
+```tsx
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  AppSidebar,
+  SidebarInset,
+} from '@subg-riosaude/subg-components'
+import { Menu } from 'lucide-react'
+
+function Layout() {
+  return (
+    <SidebarProvider>
+      <AppSidebar navItems={navItems} logoConfig={logoConfig} />
+      <SidebarInset>
+        <header className="flex items-center gap-2 border-b p-4">
+          <SidebarTrigger>
+            <Menu className="h-5 w-5" />
+          </SidebarTrigger>
+          <h1>Minha Aplicação</h1>
+        </header>
+        <main>{/* Conteúdo */}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+```
+
+### Controlar Estado Inicial
+
+Configure se a sidebar inicia aberta ou fechada:
+
+```tsx
+<SidebarProvider defaultOpen={false}>
+  <AppSidebar navItems={navItems} logoConfig={logoConfig} />
+  <SidebarInset>{/* Conteúdo */}</SidebarInset>
+</SidebarProvider>
+```
+
+### Controle Controlado (Controlled)
+
+Para controle manual do estado:
+
+```tsx
+import { useState } from 'react'
+import { SidebarProvider } from '@subg-riosaude/subg-components'
+
+function App() {
+  const [open, setOpen] = useState(true)
+
+  return (
+    <SidebarProvider open={open} onOpenChange={setOpen}>
+      <AppSidebar navItems={navItems} logoConfig={logoConfig} />
+      <SidebarInset>
+        <button onClick={() => setOpen(!open)}>
+          Toggle Sidebar
+        </button>
+        {/* Conteúdo */}
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+```
+
+### Atalho de Teclado
+
+A sidebar suporta atalho de teclado nativo:
+
+- **Mac**: `Cmd + B`
+- **Windows/Linux**: `Ctrl + B`
+
+### Estado Persistido
+
+O estado da sidebar é automaticamente salvo em cookies e restaurado entre sessões. O cookie `sidebar:state` armazena se está "expanded" ou "collapsed".
+
+### Sidebar no Lado Direito
+
+```tsx
+<SidebarProvider>
+  <SidebarInset>{/* Conteúdo principal */}</SidebarInset>
+  <AppSidebar
+    side="right"
+    navItems={navItems}
+    logoConfig={logoConfig}
+  />
+</SidebarProvider>
+```
+
+### Customizar Largura
+
+Use CSS variables para ajustar a largura:
+
+```css
+/* src/index.css */
+:root {
+  --sidebar-width: 20rem;         /* Desktop */
+  --sidebar-width-mobile: 20rem;  /* Mobile */
+}
+```
+
+### Responsividade Mobile
+
+A sidebar se adapta automaticamente para mobile:
+- Desktop: Sidebar colapsável ao lado do conteúdo
+- Mobile: Sidebar overlay com backdrop
+
+```tsx
+import { useSidebar } from '@subg-riosaude/subg-components'
+
+function MyComponent() {
+  const { isMobile, openMobile, setOpenMobile } = useSidebar()
+
+  return (
+    <div>
+      {isMobile && (
+        <button onClick={() => setOpenMobile(true)}>
+          Abrir Menu
+        </button>
+      )}
+    </div>
+  )
+}
+```
+
+### Dicas e Boas Práticas
+
+#### ✅ Use Ícones do Lucide
+
+Os ícones do `lucide-react` são otimizados e têm design consistente:
+
+```tsx
+import { Home, Users, Settings, FileText, Package } from 'lucide-react'
+
+const navItems = [
+  { title: 'Dashboard', url: '/', icon: Home },
+  { title: 'Usuários', url: '/users', icon: Users },
+  { title: 'Configurações', url: '/settings', icon: Settings },
+]
+```
+
+#### ✅ Organize com Subitens
+
+Use a estrutura hierárquica para menus complexos:
+
+```tsx
+const navItems = [
+  { title: 'Dashboard', url: '/', icon: Home },
+  {
+    title: 'Cadastros',
+    url: '#',
+    icon: FileText,
+    items: [
+      { title: 'Clientes', url: '/clientes' },
+      { title: 'Fornecedores', url: '/fornecedores' },
+      { title: 'Produtos', url: '/produtos' },
+    ],
+  },
+]
+```
+
+#### ✅ Sidebar + Breadcrumb
+
+Combine com breadcrumb para melhor navegação:
+
+```tsx
+<SidebarInset>
+  <header className="sticky top-0 z-10 flex h-16 items-center gap-2 border-b bg-white px-4">
+    <SidebarTrigger />
+    <Separator orientation="vertical" className="h-6" />
+    <PageBreadcrumb />
+  </header>
+  <main>{/* Conteúdo */}</main>
+</SidebarInset>
+```
+
+#### ✅ Loading States
+
+Mostre skeleton durante carregamento de dados:
+
+```tsx
+function Sidebar() {
+  const { data, isLoading } = useQuery('nav-items', fetchNavItems)
+
+  if (isLoading) {
+    return (
+      <AppSidebar
+        navItems={[]}
+        logoConfig={logoConfig}
+        footerContent={<SidebarSkeleton />}
+      />
+    )
+  }
+
+  return <AppSidebar navItems={data} logoConfig={logoConfig} />
+}
+```
+
+#### ⚠️ Evite Sidebar Múltiplas sem Necessidade
+
+Só use múltiplas sidebars quando realmente necessário. Para a maioria dos casos, uma sidebar principal é suficiente.
 
 ---
 
