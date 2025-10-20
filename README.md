@@ -1,8 +1,8 @@
-# @subg-riosaude/subg-components
+# @subg-dev/subg-components
 
 > Biblioteca de componentes reutilizáveis React para Sidebar e Breadcrumb desenvolvida pela SUBG, baseada em [shadcn/ui](https://ui.shadcn.com/) e [TailwindCSS](https://tailwindcss.com/).
 
-[![npm version](https://badge.fury.io/js/@subg-riosaude%2Fsubg-components.svg)](https://www.npmjs.com/package/@subg-riosaude/subg-components)
+[![npm version](https://badge.fury.io/js/@subg-dev%2Fsubg-components.svg)](https://www.npmjs.com/package/@subg-dev/subg-components)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -32,7 +32,7 @@
 **Após a publicação no NPM:**
 
 ```bash
-pnpm add @subg-riosaude/subg-components
+pnpm add @subg-dev/subg-components
 ```
 
 <details>
@@ -40,10 +40,10 @@ pnpm add @subg-riosaude/subg-components
 
 ```bash
 # npm
-npm install @subg-riosaude/subg-components
+npm install @subg-dev/subg-components
 
 # yarn
-yarn add @subg-riosaude/subg-components
+yarn add @subg-dev/subg-components
 ```
 </details>
 
@@ -62,7 +62,7 @@ pnpm link --global
 2. No seu projeto:
 ```bash
 cd /caminho/para/seu-projeto
-pnpm link --global @subg-riosaude/subg-components
+pnpm link --global @subg-dev/subg-components
 ```
 
 **Opção 2: Usando caminho local no `package.json`**
@@ -70,7 +70,7 @@ pnpm link --global @subg-riosaude/subg-components
 ```json
 {
   "dependencies": {
-    "@subg-riosaude/subg-components": "file:../subg-components"
+    "@subg-dev/subg-components": "file:../subg-components"
   }
 }
 ```
@@ -93,9 +93,9 @@ Para os mantenedores do projeto, siga estes passos para publicar:
 #### Pré-requisitos
 
 1. **Criar conta no NPM**: [npmjs.com/signup](https://www.npmjs.com/signup)
-2. **Criar organização** `@subg-riosaude` no NPM (se não existir)
+2. **Criar organização** `@subg-dev` no NPM ✅ [npmjs.com/org/subg-dev](https://www.npmjs.com/org/subg-dev)
 3. **Verificar package.json**:
-   - ✅ `name`: `@subg-riosaude/subg-components`
+   - ✅ `name`: `@subg-dev/subg-components`
    - ✅ `version`: Atualizada (ex: `1.1.0`)
    - ✅ `main`, `module`, `types`: Configurados
    - ✅ `exports`: Definidos corretamente
@@ -147,8 +147,8 @@ git push origin main --tags
 #### Verificar Publicação
 
 Após publicar, verifique:
-- 📦 **NPM**: [npmjs.com/package/@subg-riosaude/subg-components](https://www.npmjs.com/package/@subg-riosaude/subg-components)
-- 🔍 **Bundle Size**: [bundlephobia.com](https://bundlephobia.com/package/@subg-riosaude/subg-components)
+- 📦 **NPM**: [npmjs.com/package/@subg-dev/subg-components](https://www.npmjs.com/package/@subg-dev/subg-components)
+- 🔍 **Bundle Size**: [bundlephobia.com](https://bundlephobia.com/package/@subg-dev/subg-components)
 
 #### Automatizar com GitHub Actions (Opcional)
 
@@ -280,14 +280,14 @@ pnpm add react-router-dom@^7.0.0
 pnpm add lucide-react@^0.540.0
 ```
 
-#### 6️⃣ @subg-riosaude/subg-components
+#### 6️⃣ @subg-dev/subg-components
 
 <div align="center">
   <strong>🎉 Agora você está pronto para instalar esta biblioteca!</strong>
 </div>
 
 ```bash
-pnpm add @subg-riosaude/subg-components
+pnpm add @subg-dev/subg-components
 ```
 
 ---
@@ -298,7 +298,7 @@ Se você já conhece as ferramentas e quer instalar tudo de uma vez:
 
 ```bash
 # Instalar dependências de produção
-pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 tailwindcss @tailwindcss/vite @subg-riosaude/subg-components
+pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 tailwindcss @tailwindcss/vite @subg-dev/subg-components
 
 # Instalar dependências de desenvolvimento
 pnpm add -D @types/node
@@ -564,7 +564,7 @@ import {
   PageBreadcrumb,
   SidebarProvider,
   SidebarInset,
-} from '@subg-riosaude/subg-components'
+} from '@subg-dev/subg-components'
 import { Home, Users, Settings } from 'lucide-react'
 
 export function MainLayout() {
@@ -618,7 +618,7 @@ Componente de sidebar completo com navegação hierárquica, logo customizável 
 #### Exemplo Básico
 
 ```tsx
-import { AppSidebar } from '@subg-riosaude/subg-components'
+import { AppSidebar } from '@subg-dev/subg-components'
 import { Home, Settings, Users } from 'lucide-react'
 
 function Layout() {
@@ -679,7 +679,7 @@ function Layout() {
 #### Com Footer Customizado
 
 ```tsx
-import { AppSidebar } from '@subg-riosaude/subg-components'
+import { AppSidebar } from '@subg-dev/subg-components'
 
 const CustomFooter = () => (
   <div className="p-4 text-center">
@@ -708,7 +708,7 @@ Componente de breadcrumb com geração automática baseada na rota atual.
 #### Exemplo 1: Geração Automática
 
 ```tsx
-import { PageBreadcrumb } from '@subg-riosaude/subg-components'
+import { PageBreadcrumb } from '@subg-dev/subg-components'
 
 // Na rota /contratos/123
 // Gera automaticamente: Início > Contratos > 123
@@ -784,7 +784,7 @@ import { PageBreadcrumb } from '@subg-riosaude/subg-components'
 O hook `useSidebar` fornece controle total sobre o estado da sidebar:
 
 ```tsx
-import { useSidebar } from '@subg-riosaude/subg-components'
+import { useSidebar } from '@subg-dev/subg-components'
 
 function MyComponent() {
   const {
@@ -816,7 +816,7 @@ import {
   SidebarTrigger,
   AppSidebar,
   SidebarInset,
-} from '@subg-riosaude/subg-components'
+} from '@subg-dev/subg-components'
 import { Menu } from 'lucide-react'
 
 function Layout() {
@@ -854,7 +854,7 @@ Para controle manual do estado:
 
 ```tsx
 import { useState } from 'react'
-import { SidebarProvider } from '@subg-riosaude/subg-components'
+import { SidebarProvider } from '@subg-dev/subg-components'
 
 function App() {
   const [open, setOpen] = useState(true)
@@ -916,7 +916,7 @@ A sidebar se adapta automaticamente para mobile:
 - Mobile: Sidebar overlay com backdrop
 
 ```tsx
-import { useSidebar } from '@subg-riosaude/subg-components'
+import { useSidebar } from '@subg-dev/subg-components'
 
 function MyComponent() {
   const { isMobile, openMobile, setOpenMobile } = useSidebar()
@@ -1022,7 +1022,7 @@ import {
   PageBreadcrumb,
   SidebarProvider,
   SidebarInset,
-} from '@subg-riosaude/subg-components'
+} from '@subg-dev/subg-components'
 import { Home, PenBoxIcon, Truck, Building2, Users } from 'lucide-react'
 
 export function MainLayout({ children }) {
@@ -1310,10 +1310,10 @@ interface BreadcrumbItemType {
 2. O `tailwind.config.js` inclui o caminho dos componentes da biblioteca
 3. O TailwindCSS está importado no seu projeto
 
-### Problema: "Cannot find module '@subg-riosaude/subg-components'"
+### Problema: "Cannot find module '@subg-dev/subg-components'"
 
 **Solução**: Verifique se:
-1. O pacote está instalado: `pnpm list @subg-riosaude/subg-components`
+1. O pacote está instalado: `pnpm list @subg-dev/subg-components`
 2. Execute `pnpm install` novamente
 3. Limpe o cache: `pnpm store prune`
 
@@ -1381,7 +1381,7 @@ MIT © SUBG - Subsecretaria de Gestão
 ### Documentação Oficial
 
 - **Repositório GitHub**: [SUBG-RioSaude/subg-components](https://github.com/SUBG-RioSaude/subg-components)
-- **NPM Package**: [@subg-riosaude/subg-components](https://www.npmjs.com/package/@subg-riosaude/subg-components)
+- **NPM Package**: [@subg-dev/subg-components](https://www.npmjs.com/package/@subg-dev/subg-components)
 
 ### Guias de Instalação (Vite + React)
 
