@@ -107,6 +107,26 @@ O shadcn/ui requer um import alias (geralmente `@/*`) configurado no seu projeto
 }
 ```
 
+**Atualizar `tsconfig.app.json`:**
+
+```json
+{
+  "compilerOptions": {
+    // ... outras configurações
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+**⚠️ Nota:** Projetos Vite recentes possuem dois arquivos de configuração TypeScript:
+- `tsconfig.json` - Configuração base
+- `tsconfig.app.json` - Configuração específica da aplicação
+
+Ambos precisam ter a configuração de `paths` para evitar erros.
+
 **Atualizar `vite.config.ts`:**
 
 ```typescript
@@ -994,7 +1014,9 @@ pnpm add github:SUBG-RioSaude/subg-components#v1.2.0
 
 **Solução:**
 
-1. Verifique se o `tsconfig.json` tem a configuração correta:
+1. Verifique se **ambos** os arquivos TypeScript têm a configuração correta:
+
+**`tsconfig.json`:**
 ```json
 {
   "compilerOptions": {
@@ -1005,6 +1027,20 @@ pnpm add github:SUBG-RioSaude/subg-components#v1.2.0
   }
 }
 ```
+
+**`tsconfig.app.json`:**
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+**⚠️ Importante:** Projetos Vite recentes possuem ambos os arquivos. Configure os dois!
 
 2. Verifique se o `vite.config.ts` tem o alias configurado:
 ```typescript
