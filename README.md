@@ -77,33 +77,34 @@ pnpm add react@^19.0.0 react-dom@^19.0.0
 #### 2️⃣ TailwindCSS
 
 <div align="center">
-  <a href="https://tailwindcss.com/docs/installation" target="_blank">
+  <a href="https://tailwindcss.com/docs/installation/using-vite" target="_blank">
     <img src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-dark.svg" alt="TailwindCSS" width="180"/>
     <br/>
-    <strong>Instalar TailwindCSS v4</strong>
+    <strong>Instalar TailwindCSS v4 com Vite</strong>
   </a>
   <br/>
   <sub>Framework CSS utilitário</sub>
 </div>
 
 ```bash
-pnpm add tailwindcss@^4.0.0
+pnpm add -D tailwindcss@^4.0.0 postcss autoprefixer
+npx tailwindcss init -p
 ```
 
 #### 3️⃣ shadcn/ui
 
 <div align="center">
-  <a href="https://ui.shadcn.com/docs/installation" target="_blank">
+  <a href="https://ui.shadcn.com/docs/installation/vite" target="_blank">
     <img src="https://ui.shadcn.com/og.jpg" alt="shadcn/ui" width="200"/>
     <br/>
-    <strong>Instalar shadcn/ui</strong>
+    <strong>Instalar shadcn/ui com Vite</strong>
   </a>
   <br/>
   <sub>Componentes reutilizáveis</sub>
 </div>
 
 ```bash
-# Siga o guia de instalação do shadcn/ui para seu framework
+# Siga o guia de instalação do shadcn/ui para Vite
 npx shadcn@latest init
 ```
 
@@ -156,23 +157,81 @@ pnpm add @subg-riosaude/subg-components
 Se você já conhece as ferramentas e quer instalar tudo de uma vez:
 
 ```bash
-# Instalar todas as dependências
-pnpm add react@^19.0.0 react-dom@^19.0.0 tailwindcss@^4.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 @subg-riosaude/subg-components
+# Instalar dependências de produção
+pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 @subg-riosaude/subg-components
 
-# Depois configure o TailwindCSS e shadcn/ui seguindo os links acima
+# Instalar dependências de desenvolvimento
+pnpm add -D tailwindcss@^4.0.0 postcss autoprefixer @types/node
+
+# Inicializar TailwindCSS
+npx tailwindcss init -p
+
+# Inicializar shadcn/ui
+npx shadcn@latest init
 ```
 
-> ⚠️ **Importante**: Mesmo instalando tudo de uma vez, você ainda precisa configurar o TailwindCSS e shadcn/ui seguindo os guias oficiais.
+> ⚠️ **Importante**: Mesmo instalando tudo de uma vez, você ainda precisa configurar o TailwindCSS e shadcn/ui manualmente conforme a [seção de Configuração Inicial](#️-configuração-inicial).
 
 ---
 
 ## ⚙️ Configuração Inicial
 
-### 1. Configurar TailwindCSS
+> 💡 **Pré-requisito**: Este guia assume que você já instalou React, TailwindCSS v4 e shadcn/ui conforme a [seção anterior](#-antes-de-começar).
 
-Adicione as variáveis CSS no seu arquivo `globals.css` ou `app.css`:
+### Guia Completo para Vite + React
+
+Se você ainda não configurou TailwindCSS v4 e shadcn/ui no seu projeto Vite, siga os passos abaixo:
+
+#### 1️⃣ Configurar TailwindCSS v4 no Vite
+
+Siga o guia oficial: [TailwindCSS with Vite](https://tailwindcss.com/docs/installation/using-vite)
+
+```bash
+# 1. Instalar TailwindCSS
+pnpm add -D tailwindcss postcss autoprefixer
+
+# 2. Inicializar configuração
+npx tailwindcss init -p
+```
+
+**Configurar `tailwind.config.js`:**
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    // IMPORTANTE: Adicione o caminho dos componentes da biblioteca
+    './node_modules/@subg-riosaude/subg-components/dist/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
+      },
+    },
+  },
+  plugins: [],
+}
+```
+
+**Adicionar diretivas Tailwind no `src/index.css`:**
 
 ```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
   :root {
     /* Sidebar colors */
@@ -199,38 +258,55 @@ Adicione as variáveis CSS no seu arquivo `globals.css` ou `app.css`:
 }
 ```
 
-### 2. Atualizar `tailwind.config.js`
+#### 2️⃣ Configurar shadcn/ui no Vite
 
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    // Adicione o caminho dos componentes da biblioteca
-    './node_modules/@subg-riosaude/subg-components/dist/**/*.{js,ts,jsx,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
-      },
-    },
-  },
-  plugins: [],
-}
+Siga o guia oficial: [shadcn/ui with Vite](https://ui.shadcn.com/docs/installation/vite)
+
+```bash
+# Inicializar shadcn/ui
+npx shadcn@latest init
 ```
 
-### 3. Estruturar seu layout principal
+Durante a inicialização, responda as perguntas:
+
+```
+✔ Prefixed with @/ in tsconfig? yes
+✔ Choose your CSS variables: Default
+✔ Where is your global CSS file? src/index.css
+✔ Configure imports? yes
+```
+
+Isso criará automaticamente:
+- `components.json` - Configuração do shadcn/ui
+- `src/lib/utils.ts` - Utilitários
+- Atualização do `tsconfig.json` com path aliases
+
+#### 3️⃣ Configurar Path Aliases no Vite
+
+Atualize seu `vite.config.ts` para reconhecer os aliases do shadcn:
+
+```ts
+import path from 'path'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+**Instalar @types/node** (se necessário):
+
+```bash
+pnpm add -D @types/node
+```
+
+#### 4️⃣ Estruturar seu layout principal
 
 ```tsx
 // src/App.tsx ou src/layouts/MainLayout.tsx
@@ -672,9 +748,20 @@ MIT © SUBG - Subsecretaria de Gestão
 
 ## 🔗 Links Úteis
 
+### Documentação Oficial
+
 - **Repositório GitHub**: [SUBG-RioSaude/subg-components](https://github.com/SUBG-RioSaude/subg-components)
-- **Instalação TailwindCSS v4**: [tailwindcss.com/docs/installation](https://tailwindcss.com/docs/installation)
-- **Instalação shadcn/ui**: [ui.shadcn.com/docs/installation](https://ui.shadcn.com/docs/installation)
+- **NPM Package**: [@subg-riosaude/subg-components](https://www.npmjs.com/package/@subg-riosaude/subg-components)
+
+### Guias de Instalação (Vite + React)
+
+- **TailwindCSS v4 + Vite**: [tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)
+- **shadcn/ui + Vite**: [ui.shadcn.com/docs/installation/vite](https://ui.shadcn.com/docs/installation/vite)
+- **React**: [react.dev/learn/installation](https://react.dev/learn/installation)
+- **Vite**: [vitejs.dev/guide](https://vitejs.dev/guide/)
+
+### Bibliotecas Utilizadas
+
 - **shadcn/ui**: [ui.shadcn.com](https://ui.shadcn.com/)
 - **TailwindCSS**: [tailwindcss.com](https://tailwindcss.com/)
 - **Lucide Icons**: [lucide.dev](https://lucide.dev/)
