@@ -87,9 +87,56 @@ pnpx tailwindcss init -p
 @tailwind utilities;
 ```
 
-### Passo 3: Instalar shadcn/ui
+### Passo 3: Configurar Path Alias (Import Alias)
 
-**⚠️ IMPORTANTE:** Instale o shadcn/ui DEPOIS do TailwindCSS.
+**⚠️ IMPORTANTE:** Configure o path alias ANTES de instalar o shadcn/ui.
+
+O shadcn/ui requer um import alias (geralmente `@/*`) configurado no seu projeto.
+
+**Atualizar `tsconfig.json`:**
+
+```json
+{
+  "compilerOptions": {
+    // ... outras configurações
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+**Atualizar `vite.config.ts`:**
+
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+**Instalar o pacote `@types/node`** (necessário para usar `path` e `__dirname`):
+
+```bash
+pnpm add -D @types/node
+```
+
+### Passo 4: Instalar shadcn/ui
+
+**⚠️ IMPORTANTE:** Instale o shadcn/ui DEPOIS do TailwindCSS e do path alias.
 
 Siga a documentação oficial do shadcn/ui para Vite:
 📖 **[shadcn/ui - Vite Installation](https://ui.shadcn.com/docs/installation/vite)**
@@ -103,8 +150,9 @@ pnpx shadcn@latest init
 - Style: `New York`
 - Base color: `Neutral`
 - CSS variables: `Yes`
+- Import alias: `@/*` (já configurado no passo anterior)
 
-### Passo 4: Instalar Dependências Adicionais
+### Passo 5: Instalar Dependências Adicionais
 
 ```bash
 # React Router DOM
@@ -940,12 +988,58 @@ pnpm add github:SUBG-RioSaude/subg-components#v1.2.0
 
 ## 🐛 Troubleshooting
 
+### Erro: "No import alias found in your tsconfig.json file"
+
+**Problema:** O shadcn/ui não encontra o import alias configurado.
+
+**Solução:**
+
+1. Verifique se o `tsconfig.json` tem a configuração correta:
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+2. Verifique se o `vite.config.ts` tem o alias configurado:
+```typescript
+import path from 'path'
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+3. Instale o `@types/node`:
+```bash
+pnpm add -D @types/node
+```
+
+4. Reinicie o servidor de desenvolvimento:
+```bash
+pnpm dev
+```
+
+**Referência:** https://ui.shadcn.com/docs/installation/vite#configure-import-alias
+
+---
+
 ### Estilos não aparecem
 
 Certifique-se de:
-1. Adicionar o pacote ao `content` do tailwind.config.js
-2. Adicionar as variáveis CSS no seu arquivo global
-3. Importar o CSS do TailwindCSS corretamente
+1. **TailwindCSS v4:** Plugin `@tailwindcss/vite` está em `vite.config.ts` e `@import "tailwindcss"` está no CSS
+2. **TailwindCSS v3:** Adicionar o pacote ao `content` do `tailwind.config.js`
+3. Adicionar as variáveis CSS da sidebar no seu arquivo global
+4. Importar o CSS do TailwindCSS corretamente
 
 ### Tipos não são reconhecidos
 
@@ -959,6 +1053,13 @@ pnpm install --force
 Instale `lucide-react`:
 ```bash
 pnpm add lucide-react
+```
+
+### Erro: "Cannot find module 'path'" no vite.config.ts
+
+Instale o `@types/node`:
+```bash
+pnpm add -D @types/node
 ```
 
 ## 📄 Licença
