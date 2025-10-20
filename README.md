@@ -39,12 +39,52 @@ pnpm install
 Siga a documentação oficial do Vite + TailwindCSS:
 📖 **[TailwindCSS - Vite Installation Guide](https://tailwindcss.com/docs/guides/vite)**
 
+**Método Recomendado: Vite Plugin (TailwindCSS v4+)**
+
 ```bash
-# 1. Instalar TailwindCSS
+# Instalar TailwindCSS como plugin do Vite
+pnpm add -D tailwindcss @tailwindcss/vite
+```
+
+**Configurar `vite.config.ts`:**
+
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(), // Adicione o plugin do TailwindCSS
+  ],
+})
+```
+
+**Adicionar ao `src/index.css`:**
+
+```css
+@import "tailwindcss";
+```
+
+**Método Alternativo: PostCSS (TailwindCSS v3)**
+
+Se você estiver usando TailwindCSS v3, use PostCSS:
+
+```bash
+# Instalar TailwindCSS com PostCSS
 pnpm add -D tailwindcss postcss autoprefixer
 
-# 2. Criar arquivo de configuração
+# Criar arquivo de configuração
 pnpx tailwindcss init -p
+```
+
+**Adicionar ao `src/index.css`:**
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
 
 ### Passo 3: Instalar shadcn/ui
@@ -86,8 +126,13 @@ pnpm list react react-dom react-router-dom tailwindcss lucide-react
 - React: `^19.0.0`
 - React DOM: `^19.0.0`
 - React Router DOM: `^7.0.0`
-- TailwindCSS: `^4.0.0`
+- TailwindCSS: `^4.0.0` (ou `^3.4.0` se usar PostCSS)
 - Lucide React: `^0.540.0`
+
+**Nota sobre TailwindCSS v4:**
+- A versão 4 do TailwindCSS usa o plugin `@tailwindcss/vite` integrado ao Vite
+- Não requer `tailwind.config.js` nem `postcss.config.js`
+- Usa `@import "tailwindcss"` em vez de `@tailwind` directives
 
 ### Links das Documentações Oficiais
 
@@ -134,6 +179,45 @@ Após instalar o pacote e verificar os pré-requisitos, siga estes passos:
 
 ### Passo 1: Configurar TailwindCSS
 
+#### Se você está usando TailwindCSS v4 (Vite Plugin)
+
+Não é necessário arquivo de configuração! O plugin do Vite gerencia automaticamente.
+
+Apenas certifique-se de ter o plugin configurado no `vite.config.ts`:
+
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+})
+```
+
+E adicione ao seu `src/index.css`:
+
+```css
+@import "tailwindcss";
+
+/* Variáveis da Sidebar - Tema claro */
+:root {
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+```
+
+#### Se você está usando TailwindCSS v3 (PostCSS)
+
 Atualize seu `tailwind.config.js` para incluir o pacote no escaneamento de classes CSS:
 
 ```javascript
@@ -166,28 +250,10 @@ export default {
 }
 ```
 
-### Passo 2: Adicionar Variáveis CSS
-
-Adicione as variáveis CSS da sidebar ao seu arquivo `src/index.css` (ou arquivo CSS global):
+**Variáveis CSS adicionais (opcional - tema escuro):**
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Variáveis da Sidebar - Tema claro */
-:root {
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 240 5.3% 26.1%;
-  --sidebar-primary: 240 5.9% 10%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 240 4.8% 95.9%;
-  --sidebar-accent-foreground: 240 5.9% 10%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
-}
-
-/* Opcional: Tema escuro */
+/* Tema escuro (opcional) */
 .dark {
   --sidebar-background: 240 5.9% 10%;
   --sidebar-foreground: 0 0% 98%;
@@ -200,7 +266,7 @@ Adicione as variáveis CSS da sidebar ao seu arquivo `src/index.css` (ou arquivo
 }
 ```
 
-### Passo 3: Configurar Layout da Aplicação
+### Passo 2: Configurar Layout da Aplicação
 
 Envolva sua aplicação com o `SidebarProvider` e estruture o layout:
 
