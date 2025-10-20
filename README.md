@@ -61,8 +61,17 @@ Esta biblioteca requer que seu projeto tenha as seguintes dependências instalad
 </div>
 
 ```bash
+# Criar projeto Vite com React + TypeScript
+pnpm create vite@latest my-project --template react-ts
+
+# Ou com SWC (compilação mais rápida)
+pnpm create vite@latest my-project --template react-swc-ts
+
+# Instalar React manualmente (se já tem o projeto)
 pnpm add react@^19.0.0 react-dom@^19.0.0
 ```
+
+> 💡 **Dica**: Use o template `react-swc-ts` para compilação mais rápida em projetos grandes.
 
 #### 2️⃣ TailwindCSS v4
 
@@ -179,6 +188,9 @@ pnpm add tailwindcss @tailwindcss/vite
 
 **Configurar `vite.config.ts`:**
 
+<details>
+<summary>Usando React com Babel (padrão)</summary>
+
 ```ts
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
@@ -197,6 +209,35 @@ export default defineConfig({
   },
 })
 ```
+</details>
+
+<details>
+<summary>Usando React com SWC (mais rápido)</summary>
+
+Se você criou seu projeto com o template `react-swc-ts`, use:
+
+```ts
+import path from 'path'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    react(), // Plugin React com SWC
+    tailwindcss(), // Plugin do TailwindCSS v4
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+> 💡 **Dica**: SWC é um compilador mais rápido que o Babel, recomendado para projetos maiores.
+
+</details>
 
 **Configurar `src/index.css`:**
 
@@ -249,6 +290,11 @@ Adicione o `baseUrl` e `paths` para path aliases:
 
 ```json
 {
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -257,6 +303,45 @@ Adicione o `baseUrl` e `paths` para path aliases:
   }
 }
 ```
+
+**Configurar `tsconfig.app.json`:**
+
+Também adicione os path aliases no `tsconfig.app.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
+```
+
+> 📝 **Importante**: Ambos os arquivos (`tsconfig.json` e `tsconfig.app.json`) precisam ter os path aliases configurados para funcionar corretamente.
 
 **Inicializar shadcn/ui:**
 
