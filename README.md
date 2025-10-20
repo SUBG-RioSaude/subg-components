@@ -245,94 +245,54 @@ pnpm add github:SUBG-RioSaude/subg-components#a1b2c3d
 
 Após instalar o pacote e verificar os pré-requisitos, siga estes passos:
 
-### Passo 1: Configurar TailwindCSS
+### Passo 1: Importar os Estilos
 
-#### Se você está usando TailwindCSS v4 (Vite Plugin)
+**⚠️ IMPORTANTE:** A partir da versão 1.0.6, os estilos CSS são exportados automaticamente pela biblioteca!
 
-Não é necessário arquivo de configuração! O plugin do Vite gerencia automaticamente.
+#### Opção A: Importar CSS da biblioteca (Recomendado)
 
-Apenas certifique-se de ter o plugin configurado no `vite.config.ts`:
+Importe os estilos no seu arquivo principal (`src/main.tsx` ou `src/index.tsx`):
 
 ```typescript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
+// Importa os estilos da biblioteca (tema padrão)
+import '@subg-riosaude/subg-components/styles'
 
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
-})
+// OU importar um tema específico:
+// import '@subg-riosaude/subg-components/themes/blue'  // Tema azul (CAC)
+// import '@subg-riosaude/subg-components/themes/default'  // Tema padrão
 ```
 
-E adicione ao seu `src/index.css`:
+**Temas disponíveis:**
+- `@subg-riosaude/subg-components/styles` - Tema padrão (neutro)
+- `@subg-riosaude/subg-components/themes/default` - Mesmo que styles
+- `@subg-riosaude/subg-components/themes/blue` - Tema azul do CAC (fundo cinza #666 + azul #43B9EB)
+
+#### Opção B: Customizar cores
+
+Se você quiser customizar as cores, importe o CSS base e sobrescreva as variáveis:
 
 ```css
+/* src/index.css */
 @import "tailwindcss";
+@import "@subg-riosaude/subg-components/styles";
 
-/* Variáveis da Sidebar - Tema claro */
+/* Customize as cores da sidebar */
 :root {
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 240 5.3% 26.1%;
-  --sidebar-primary: 240 5.9% 10%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 240 4.8% 95.9%;
-  --sidebar-accent-foreground: 240 5.9% 10%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
+  --sidebar-background: 0 0% 40%;      /* Fundo cinza escuro */
+  --sidebar-primary: 199 79% 59%;      /* Azul #43B9EB */
+  /* ... outras variáveis */
 }
 ```
 
-#### Se você está usando TailwindCSS v3 (PostCSS)
-
-Atualize seu `tailwind.config.js` para incluir o pacote no escaneamento de classes CSS:
-
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    // ⚠️ IMPORTANTE: Adicione esta linha para escanear os componentes do pacote
-    './node_modules/@subg-riosaude/subg-components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        // Cores customizadas para a sidebar
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
-      },
-    },
-  },
-  plugins: [],
-}
-```
-
-**Variáveis CSS adicionais (opcional - tema escuro):**
-
-```css
-/* Tema escuro (opcional) */
-.dark {
-  --sidebar-background: 240 5.9% 10%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-primary: 0 0% 98%;
-  --sidebar-primary-foreground: 240 5.9% 10%;
-  --sidebar-accent: 240 3.7% 15.9%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-border: 240 3.7% 15.9%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
-}
-```
+**Variáveis disponíveis para customização:**
+- `--sidebar-background` - Cor de fundo da sidebar
+- `--sidebar-foreground` - Cor do texto principal
+- `--sidebar-primary` - Cor primária (itens ativos)
+- `--sidebar-primary-foreground` - Cor do texto em itens ativos
+- `--sidebar-accent` - Cor de hover/foco
+- `--sidebar-accent-foreground` - Cor do texto em hover
+- `--sidebar-border` - Cor das bordas
+- `--sidebar-ring` - Cor do anel de foco
 
 ### Passo 2: Configurar Layout da Aplicação
 

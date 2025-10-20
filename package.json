@@ -1,6 +1,6 @@
 {
   "name": "@subg-riosaude/subg-components",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Componentes reutilizáveis da SUBG - Sistema de Sidebar e Breadcrumb",
   "type": "module",
   "main": "./dist/index.js",
@@ -10,7 +10,9 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./styles": "./dist/styles.css",
+    "./themes/*": "./dist/themes/*.css"
   },
   "files": [
     "dist",

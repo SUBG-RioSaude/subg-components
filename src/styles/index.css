@@ -1,0 +1,67 @@
+/**
+ * @subg-riosaude/subg-components - Estilos Base
+ *
+ * Variáveis CSS necessárias para os componentes Sidebar e Breadcrumb
+ * Importe este arquivo no seu projeto para aplicar os estilos padrão
+ *
+ * @example
+ * ```ts
+ * import '@subg-riosaude/subg-components/styles'
+ * ```
+ */
+
+/* ============================================================================
+   VARIÁVEIS DA SIDEBAR - TEMA CLARO (PADRÃO)
+   ============================================================================ */
+
+:root {
+  /* Variáveis da Sidebar */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+/* ============================================================================
+   VARIÁVEIS DA SIDEBAR - TEMA ESCURO
+   ============================================================================ */
+
+.dark {
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 0 0% 98%;
+  --sidebar-primary-foreground: 240 5.9% 10%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+/* ============================================================================
+   CUSTOMIZAÇÃO
+   ============================================================================
+
+   Para customizar as cores, sobrescreva as variáveis CSS no seu projeto:
+
+   :root {
+     --sidebar-primary: 200 100% 50%; // Azul customizado
+     --sidebar-background: 0 0% 95%;  // Fundo cinza claro
+   }
+
+   Variáveis disponíveis:
+   - --sidebar-background: Cor de fundo da sidebar
+   - --sidebar-foreground: Cor do texto principal
+   - --sidebar-primary: Cor primária (itens ativos)
+   - --sidebar-primary-foreground: Cor do texto em itens ativos
+   - --sidebar-accent: Cor de hover/foco
+   - --sidebar-accent-foreground: Cor do texto em hover
+   - --sidebar-border: Cor das bordas
+   - --sidebar-ring: Cor do anel de foco (acessibilidade)
+
+   Todas as cores usam formato HSL (Hue Saturation Lightness)
+   Exemplo: "200 100% 50%" = hsl(200deg 100% 50%)
+   ============================================================================ */

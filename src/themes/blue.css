@@ -1,0 +1,46 @@
+/**
+ * @subg-riosaude/subg-components - Tema Blue (CAC)
+ *
+ * Tema azul customizado usado no sistema CAC
+ * Cores: Fundo cinza escuro (#666) com destaque azul (#43B9EB)
+ *
+ * @example
+ * ```ts
+ * // Importar no lugar do styles padrão
+ * import '@subg-riosaude/subg-components/themes/blue'
+ * ```
+ */
+
+/* ============================================================================
+   TEMA BLUE - SIDEBAR COM FUNDO ESCURO E DESTAQUE AZUL
+   ============================================================================ */
+
+:root {
+  /* Sidebar com fundo cinza escuro (#666) */
+  --sidebar-background: 0 0% 40%;                /* oklch(0.404 0.017 264.376) - bg-neutral-500 */
+  --sidebar-foreground: 0 0% 100%;               /* Texto branco */
+
+  /* Item ativo com azul #43B9EB */
+  --sidebar-primary: 199 79% 59%;                /* oklch(0.709 0.142 213.68) - #43B9EB */
+  --sidebar-primary-foreground: 0 0% 100%;       /* Texto branco */
+
+  /* Hover com efeito glass transparente */
+  --sidebar-accent: 0 0% 100% / 0.1;             /* Branco com 10% opacidade */
+  --sidebar-accent-foreground: 199 79% 59%;      /* Azul #43B9EB para texto ativo */
+
+  /* Bordas e foco */
+  --sidebar-border: 0 0% 50%;                    /* Borda mais escura */
+  --sidebar-ring: 199 79% 59%;                   /* Anel de foco azul #43B9EB */
+}
+
+/* Mantém as mesmas cores no tema escuro */
+.dark {
+  --sidebar-background: 0 0% 40%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 199 79% 59%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 100% / 0.1;
+  --sidebar-accent-foreground: 199 79% 59%;
+  --sidebar-border: 0 0% 50%;
+  --sidebar-ring: 199 79% 59%;
+}
