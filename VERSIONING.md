@@ -1,6 +1,6 @@
 # Guia de Versionamento
 
-Este guia explica como configurar e usar o sistema de versionamento automático incluído no pacote `@subg-riosaide/subg-components`.
+Este guia explica como configurar e usar o sistema de versionamento automático incluído no pacote `@subg-riosaude/subg-components`.
 
 ## 📋 Índice
 
@@ -96,7 +96,7 @@ import {
   obterVersaoApp,
   obterMetadataVersao,
   obterVersaoCompleta,
-} from '@subg-riosaide/subg-components'
+} from '@subg-riosaude/subg-components'
 
 // Versão formatada
 console.log(obterVersaoApp())
@@ -357,7 +357,7 @@ const ano = obterAnoAtual()
 ### Exibir Versão no Footer
 
 ```tsx
-import { obterVersaoApp } from '@subg-riosaide/subg-components'
+import { obterVersaoApp } from '@subg-riosaude/subg-components'
 
 function Footer() {
   return (
@@ -371,7 +371,7 @@ function Footer() {
 ### Página "Sobre" com Build Info
 
 ```tsx
-import { obterMetadataVersao } from '@subg-riosaide/subg-components'
+import { obterMetadataVersao } from '@subg-riosaude/subg-components'
 
 function AboutPage() {
   const metadata = obterMetadataVersao()
@@ -403,8 +403,8 @@ function AboutPage() {
 ### Tooltip com Build Info
 
 ```tsx
-import { obterMetadataVersao, obterVersaoApp } from '@subg-riosaide/subg-components'
-import { Tooltip } from '@subg-riosaide/subg-components'
+import { obterMetadataVersao, obterVersaoApp } from '@subg-riosaude/subg-components'
+import { Tooltip } from '@subg-riosaude/subg-components'
 
 function VersionBadge() {
   const versao = obterVersaoApp()
@@ -429,7 +429,7 @@ function VersionBadge() {
 ### Logging de Deploy
 
 ```typescript
-import { obterMetadataVersao } from '@subg-riosaide/subg-components'
+import { obterMetadataVersao } from '@subg-riosaude/subg-components'
 
 // No início da aplicação
 const metadata = obterMetadataVersao()

@@ -1,4 +1,4 @@
-# @subg-riosaide/subg-components
+# @subg-riosaude/subg-components
 
 > Biblioteca de componentes reutilizáveis React para Sidebar e Breadcrumb desenvolvida pela SUBG Rio Saúde
 
@@ -143,7 +143,7 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     // ⚠️ IMPORTANTE: Adicione esta linha para escanear os componentes do pacote
-    './node_modules/@subg-riosaide/subg-components/dist/**/*.js',
+    './node_modules/@subg-riosaude/subg-components/dist/**/*.js',
   ],
   theme: {
     extend: {
@@ -207,7 +207,7 @@ Envolva sua aplicação com o `SidebarProvider` e estruture o layout:
 ```tsx
 // App.tsx ou main.tsx
 import { BrowserRouter } from 'react-router-dom'
-import { SidebarProvider } from '@subg-riosaide/subg-components'
+import { SidebarProvider } from '@subg-riosaude/subg-components'
 import { Layout } from './components/Layout'
 
 function App() {
@@ -237,7 +237,7 @@ import {
   SidebarProvider,
   SidebarInset,
   PageBreadcrumb,
-} from '@subg-riosaide/subg-components'
+} from '@subg-riosaude/subg-components'
 
 function Layout() {
   return (
@@ -270,7 +270,7 @@ import {
   PageBreadcrumb,
   SidebarProvider,
   SidebarInset,
-} from '@subg-riosaide/subg-components'
+} from '@subg-riosaude/subg-components'
 import { Home, Settings, Users } from 'lucide-react'
 
 function App() {
@@ -304,7 +304,7 @@ function App() {
 ### Usando Navegação com Submenus
 
 ```tsx
-import { AppSidebar } from '@subg-riosaide/subg-components'
+import { AppSidebar } from '@subg-riosaude/subg-components'
 import { Home, FileText, Settings } from 'lucide-react'
 
 const navItems = [
@@ -347,7 +347,7 @@ function App() {
 ### Adicionando Menu de Usuário
 
 ```tsx
-import { AppSidebar, NavUser } from '@subg-riosaide/subg-components'
+import { AppSidebar, NavUser } from '@subg-riosaude/subg-components'
 import { useNavigate } from 'react-router-dom'
 
 function App() {
@@ -383,7 +383,7 @@ function App() {
 ### Personalizando Breadcrumb
 
 ```tsx
-import { PageBreadcrumb } from '@subg-riosaide/subg-components'
+import { PageBreadcrumb } from '@subg-riosaude/subg-components'
 
 // Opção 1: Automático (usa a rota atual)
 <PageBreadcrumb />
@@ -417,7 +417,7 @@ Componente principal de sidebar com navegação hierárquica, logo e footer cust
 
 **Importação:**
 ```tsx
-import { AppSidebar } from '@subg-riosaide/subg-components'
+import { AppSidebar } from '@subg-riosaude/subg-components'
 ```
 
 **Props:**
@@ -453,7 +453,7 @@ interface LogoConfig {
 **Exemplo Completo:**
 
 ```tsx
-import { AppSidebar } from '@subg-riosaide/subg-components'
+import { AppSidebar } from '@subg-riosaude/subg-components'
 import { Home, FileText, Building, Users, Settings } from 'lucide-react'
 
 <AppSidebar
@@ -495,7 +495,7 @@ Menu dropdown de usuário com avatar gerado automaticamente, informações do us
 
 **Importação:**
 ```tsx
-import { NavUser } from '@subg-riosaide/subg-components'
+import { NavUser } from '@subg-riosaude/subg-components'
 ```
 
 **Props:**
@@ -509,7 +509,7 @@ import { NavUser } from '@subg-riosaide/subg-components'
 **Exemplo Completo:**
 
 ```tsx
-import { NavUser } from '@subg-riosaide/subg-components'
+import { NavUser } from '@subg-riosaude/subg-components'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -558,7 +558,7 @@ Breadcrumb inteligente com geração automática baseada na URL atual ou configu
 
 **Importação:**
 ```tsx
-import { PageBreadcrumb } from '@subg-riosaide/subg-components'
+import { PageBreadcrumb } from '@subg-riosaude/subg-components'
 ```
 
 **Props:**
@@ -632,7 +632,7 @@ Footer informativo com dados de versão, ambiente e desenvolvedor.
 
 **Importação:**
 ```tsx
-import { SidebarFooter } from '@subg-riosaide/subg-components'
+import { SidebarFooter } from '@subg-riosaude/subg-components'
 ```
 
 **Props:**
@@ -746,7 +746,7 @@ export default defineConfig({
 **3. Usar as Funções:**
 
 ```typescript
-import { obterVersaoApp, obterMetadataVersao } from '@subg-riosaide/subg-components'
+import { obterVersaoApp, obterMetadataVersao } from '@subg-riosaude/subg-components'
 
 console.log(obterVersaoApp()) // "1.0.0" ou "1.0.0-dev"
 console.log(obterMetadataVersao()) // { versao, commitSha, buildNumber, ... }
@@ -773,7 +773,7 @@ Certifique-se de ter as seguintes dependências instaladas no seu projeto:
 Este pacote é totalmente tipado com TypeScript. As definições de tipos são incluídas automaticamente.
 
 ```typescript
-import type { AppSidebarProps, NavItem, NavUserProps } from '@subg-riosaide/subg-components'
+import type { AppSidebarProps, NavItem, NavUserProps } from '@subg-riosaude/subg-components'
 ```
 
 ## 📖 Exemplos Completos
@@ -788,7 +788,7 @@ import {
   NavUser,
   SidebarProvider,
   SidebarInset,
-} from '@subg-riosaide/subg-components'
+} from '@subg-riosaude/subg-components'
 import { Home, FileText, Settings } from 'lucide-react'
 
 function Layout() {
@@ -863,7 +863,7 @@ export default App
 Para atualizar para a versão mais recente:
 
 ```bash
-pnpm update @subg-riosaide/subg-components
+pnpm update @subg-riosaude/subg-components
 ```
 
 Para instalar uma versão específica:
