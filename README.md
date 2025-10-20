@@ -10,6 +10,7 @@
 ## 📑 Índice
 
 - [Instalação](#-instalação)
+- [Antes de Começar](#-antes-de-começar)
 - [Configuração Inicial](#-configuração-inicial)
 - [Componentes](#-componentes)
   - [AppSidebar](#appsidebar)
@@ -48,6 +49,120 @@ Certifique-se de que seu projeto possui as seguintes dependências:
 ```bash
 pnpm add react@^19.0.0 react-dom@^19.0.0 react-router-dom@^7.0.0 tailwindcss@^4.0.0 lucide-react@^0.540.0
 ```
+
+---
+
+## 🎯 Antes de Começar
+
+Esta biblioteca requer que seu projeto tenha as seguintes dependências instaladas e configuradas. **Siga a ordem abaixo:**
+
+### Ordem de Instalação Recomendada
+
+#### 1️⃣ React & React DOM
+
+<div align="center">
+  <a href="https://react.dev/learn/installation" target="_blank">
+    <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" alt="React" width="120"/>
+    <br/>
+    <strong>Instalar React v19</strong>
+  </a>
+  <br/>
+  <sub>Biblioteca JavaScript para interfaces</sub>
+</div>
+
+```bash
+pnpm add react@^19.0.0 react-dom@^19.0.0
+```
+
+#### 2️⃣ TailwindCSS
+
+<div align="center">
+  <a href="https://tailwindcss.com/docs/installation" target="_blank">
+    <img src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-dark.svg" alt="TailwindCSS" width="180"/>
+    <br/>
+    <strong>Instalar TailwindCSS v4</strong>
+  </a>
+  <br/>
+  <sub>Framework CSS utilitário</sub>
+</div>
+
+```bash
+pnpm add tailwindcss@^4.0.0
+```
+
+#### 3️⃣ shadcn/ui
+
+<div align="center">
+  <a href="https://ui.shadcn.com/docs/installation" target="_blank">
+    <img src="https://ui.shadcn.com/og.jpg" alt="shadcn/ui" width="200"/>
+    <br/>
+    <strong>Instalar shadcn/ui</strong>
+  </a>
+  <br/>
+  <sub>Componentes reutilizáveis</sub>
+</div>
+
+```bash
+# Siga o guia de instalação do shadcn/ui para seu framework
+npx shadcn@latest init
+```
+
+#### 4️⃣ React Router
+
+<div align="center">
+  <a href="https://reactrouter.com/en/main/start/tutorial" target="_blank">
+    <img src="https://raw.githubusercontent.com/remix-run/react-router/main/docs/public/og.jpg" alt="React Router" width="200"/>
+    <br/>
+    <strong>Instalar React Router v7</strong>
+  </a>
+  <br/>
+  <sub>Roteamento para aplicações React</sub>
+</div>
+
+```bash
+pnpm add react-router-dom@^7.0.0
+```
+
+#### 5️⃣ Lucide React
+
+<div align="center">
+  <a href="https://lucide.dev/guide/installation" target="_blank">
+    <img src="https://lucide.dev/og.png" alt="Lucide" width="200"/>
+    <br/>
+    <strong>Instalar Lucide Icons</strong>
+  </a>
+  <br/>
+  <sub>Biblioteca de ícones</sub>
+</div>
+
+```bash
+pnpm add lucide-react@^0.540.0
+```
+
+#### 6️⃣ @subg-riosaude/subg-components
+
+<div align="center">
+  <strong>🎉 Agora você está pronto para instalar esta biblioteca!</strong>
+</div>
+
+```bash
+pnpm add @subg-riosaude/subg-components
+```
+
+---
+
+### ⚡ Instalação Rápida (Tudo de Uma Vez)
+
+Se você já conhece as ferramentas e quer instalar tudo de uma vez:
+
+```bash
+# Instalar todas as dependências
+pnpm add react@^19.0.0 react-dom@^19.0.0 tailwindcss@^4.0.0 react-router-dom@^7.0.0 lucide-react@^0.540.0 @subg-riosaude/subg-components
+
+# Depois configure o TailwindCSS e shadcn/ui seguindo os links acima
+```
+
+> ⚠️ **Importante**: Mesmo instalando tudo de uma vez, você ainda precisa configurar o TailwindCSS e shadcn/ui seguindo os guias oficiais.
 
 ---
 
@@ -558,6 +673,8 @@ MIT © SUBG - Subsecretaria de Gestão
 ## 🔗 Links Úteis
 
 - **Repositório GitHub**: [SUBG-RioSaude/subg-components](https://github.com/SUBG-RioSaude/subg-components)
+- **Instalação TailwindCSS v4**: [tailwindcss.com/docs/installation](https://tailwindcss.com/docs/installation)
+- **Instalação shadcn/ui**: [ui.shadcn.com/docs/installation](https://ui.shadcn.com/docs/installation)
 - **shadcn/ui**: [ui.shadcn.com](https://ui.shadcn.com/)
 - **TailwindCSS**: [tailwindcss.com](https://tailwindcss.com/)
 - **Lucide Icons**: [lucide.dev](https://lucide.dev/)
