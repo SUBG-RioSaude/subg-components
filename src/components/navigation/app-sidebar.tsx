@@ -9,8 +9,8 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-} from '../ui/sidebar'
-import { Separator } from '../ui/separator'
+} from '../../ui/sidebar'
+import { Separator } from '../../ui/separator'
 
 export interface NavItem {
   title: string

@@ -1,7 +1,7 @@
 {
   "name": "@subg-dev/subg-components",
-  "version": "1.1.1",
-  "description": "Componentes reutilizáveis da SUBG - Sistema de Sidebar e Breadcrumb",
+  "version": "1.2.0",
+  "description": "Componentes reutiliz\u00e1veis da SUBG - Sistema de Sidebar e Breadcrumb",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -10,6 +10,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./tailwind.plugin": {
+      "import": "./dist/tailwind.plugin.js",
+      "types": "./dist/tailwind.plugin.d.ts"
     }
   },
   "files": [
@@ -35,11 +39,10 @@
     "url": "https://github.com/SUBG-RioSaude/subg-components.git"
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.0.0",
-    "tailwindcss": "^4.0.0",
-    "lucide-react": "^0.540.0"
+    "react": ">=18",
+    "react-dom": ">=18",
+    "react-router-dom": ">=6",
+    "lucide-react": ">=0.300.0"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

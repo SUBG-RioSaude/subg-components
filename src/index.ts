@@ -46,7 +46,7 @@ export {
   SidebarRail,
   SidebarInset,
   useSidebar,
-} from './components/ui/sidebar'
+} from './ui/sidebar'
 
 export {
   Breadcrumb,
@@ -56,22 +56,22 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
-} from './components/ui/breadcrumb'
+} from './ui/breadcrumb'
 
-export { Separator } from './components/ui/separator'
-export { Button } from './components/ui/button'
-export { Avatar, AvatarImage, AvatarFallback } from './components/ui/avatar'
+export { Separator } from './ui/separator'
+export { Button } from './ui/button'
+export { Avatar, AvatarImage, AvatarFallback } from './ui/avatar'
 export {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
-} from './components/ui/tooltip'
+} from './ui/tooltip'
 export {
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
-} from './components/ui/collapsible'
+} from './ui/collapsible'
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -88,11 +88,11 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
-} from './components/ui/dropdown-menu'
+} from './ui/dropdown-menu'
 
 // ============================================================================
 // Utilitários
 // ============================================================================
 
-export { cn } from './lib/utils'
+export { cn } from './utils/cn'
 export { useIsMobile } from './hooks/use-mobile'

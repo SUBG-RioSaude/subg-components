@@ -3,27 +3,31 @@ import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 
+const srcDir = resolve(__dirname, 'src')
+
 export default defineConfig({
   plugins: [
     react(),
     dts({
-      insertTypesEntry: true,
+      entryRoot: 'src',
+      include: ['src'],
+      tsconfigPath: 'tsconfig.json',
       rollupTypes: true,
     }),
   ],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-    },
-  },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(srcDir, 'index.ts'),
       name: 'SubgComponents',
-      fileName: 'index',
       formats: ['es'],
+      fileName: (_format, entryName) =>
+        entryName === 'tailwind.plugin' ? 'tailwind.plugin.js' : 'index.js',
     },
     rollupOptions: {
+      input: {
+        index: resolve(srcDir, 'index.ts'),
+        'tailwind.plugin': resolve(srcDir, 'tailwind.plugin.ts'),
+      },
       external: [
         'react',
         'react-dom',

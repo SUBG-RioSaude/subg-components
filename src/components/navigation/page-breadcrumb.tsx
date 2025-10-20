@@ -8,8 +8,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../ui/breadcrumb'
-import { SidebarTrigger } from '../ui/sidebar'
+} from '../../ui/breadcrumb'
+import { SidebarTrigger } from '../../ui/sidebar'
 
 export interface BreadcrumbItemType {
   label: string
