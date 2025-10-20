@@ -11,23 +11,28 @@ import {
 } from '../ui/breadcrumb'
 import { SidebarTrigger } from '../ui/sidebar'
 
-export interface BreadcrumbItem {
+export interface BreadcrumbItemType {
   label: string
   href: string
 }
 
 export interface PageBreadcrumbProps {
-  /** Itens customizados do breadcrumb (opcional) */
-  items?: BreadcrumbItem[]
+  /** Itens customizados do breadcrumb (opcional - se não fornecido, gera automaticamente) */
+  items?: BreadcrumbItemType[]
   /** Mapa de labels customizados por segmento de URL */
   labelMap?: Record<string, string>
+  /** Função para gerar labels dinâmicos (ex: buscar nome de contrato por ID) */
+  labelResolver?: (segment: string, currentPath: string) => string | undefined
 }
 
 /**
  * Componente de breadcrumb com geração automática baseada na rota
+ * Baseado em shadcn/ui + TailwindCSS
  *
  * @example
  * ```tsx
+ * import { PageBreadcrumb } from '@subg-riosaude/subg-components'
+ *
  * // Breadcrumb automático
  * <PageBreadcrumb />
  *
@@ -36,6 +41,16 @@ export interface PageBreadcrumbProps {
  *   labelMap={{
  *     'contratos': 'Contratos',
  *     'fornecedores': 'Fornecedores',
+ *   }}
+ * />
+ *
+ * // Breadcrumb com resolver dinâmico
+ * <PageBreadcrumb
+ *   labelResolver={(segment, path) => {
+ *     if (path.includes('/contratos/') && segment.match(/^[0-9]+$/)) {
+ *       return `Contrato ${segment}`
+ *     }
+ *     return undefined
  *   }}
  * />
  *
@@ -49,25 +64,37 @@ export interface PageBreadcrumbProps {
  * />
  * ```
  */
-const PageBreadcrumb = ({ items, labelMap = {} }: PageBreadcrumbProps) => {
+const PageBreadcrumb = ({
+  items,
+  labelMap = {},
+  labelResolver,
+}: PageBreadcrumbProps) => {
   const location = useLocation()
 
-  const generateCrumbs = (): BreadcrumbItem[] => {
+  const generateCrumbs = (): BreadcrumbItemType[] => {
     if (items) {
       return items
     }
 
     const pathSegments = location.pathname.split('/').filter(Boolean)
-    const crumbs: BreadcrumbItem[] = [{ label: 'Início', href: '/' }]
+    const crumbs: BreadcrumbItemType[] = [{ label: 'Início', href: '/' }]
 
     let currentPath = ''
     pathSegments.forEach((segment) => {
       currentPath += `/${segment}`
 
-      // Usar label customizado se fornecido, senão capitalizar o segmento
-      const label =
-        labelMap[segment] ||
-        segment.charAt(0).toUpperCase() + segment.slice(1)
+      // 1. Tentar resolver via função customizada
+      let label = labelResolver?.(segment, currentPath)
+
+      // 2. Tentar usar mapa de labels
+      if (!label) {
+        label = labelMap[segment]
+      }
+
+      // 3. Fallback: capitalizar o segmento
+      if (!label) {
+        label = segment.charAt(0).toUpperCase() + segment.slice(1)
+      }
 
       crumbs.push({ label, href: currentPath })
     })

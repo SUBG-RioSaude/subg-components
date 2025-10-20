@@ -2,11 +2,7 @@ import * as React from 'react'
 
 const MOBILE_BREAKPOINT = 768
 
-/**
- * Hook para detectar se o dispositivo é mobile
- * Usa matchMedia para detectar viewport <= 768px
- */
-export const useIsMobile = () => {
+export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
@@ -16,9 +12,7 @@ export const useIsMobile = () => {
     }
     mql.addEventListener('change', onChange)
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => {
-      mql.removeEventListener('change', onChange)
-    }
+    return () => mql.removeEventListener('change', onChange)
   }, [])
 
   return !!isMobile

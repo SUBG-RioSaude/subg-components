@@ -20,20 +20,43 @@ import {
   useSidebar,
 } from '../ui/sidebar'
 
-export const NavMain = ({
-  items,
-}: {
-  items: {
+export interface NavMainItem {
+  title: string
+  url: string
+  icon: LucideIcon
+  isActive?: boolean
+  items?: {
     title: string
     url: string
-    icon: LucideIcon
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
   }[]
-}) => {
+}
+
+export interface NavMainProps {
+  items: NavMainItem[]
+}
+
+/**
+ * Componente de navegação principal da sidebar
+ *
+ * @example
+ * ```tsx
+ * import { NavMain } from '@subg-riosaude/subg-components'
+ * import { Home, Settings } from 'lucide-react'
+ *
+ * <NavMain
+ *   items={[
+ *     { title: 'Início', url: '/', icon: Home },
+ *     {
+ *       title: 'Configurações',
+ *       url: '/settings',
+ *       icon: Settings,
+ *       items: [{ title: 'Geral', url: '/settings/general' }]
+ *     }
+ *   ]}
+ * />
+ * ```
+ */
+export const NavMain = ({ items }: NavMainProps) => {
   const location = useLocation()
   const navigate = useNavigate()
   const { state } = useSidebar()
@@ -43,12 +66,10 @@ export const NavMain = ({
     itemUrl: string,
     subItems?: { title: string; url: string }[],
   ) => {
-    // Verifica se a URL atual corresponde exatamente ao item
     if (location.pathname === itemUrl) {
       return true
     }
 
-    // Verifica se algum subitem está ativo
     if (subItems) {
       const hasActiveSubItem = subItems.some(
         (subItem) => location.pathname === subItem.url,
@@ -56,7 +77,6 @@ export const NavMain = ({
       if (hasActiveSubItem) {
         return true
       }
-      // Para itens com subitens, verifica se a URL atual começa com a URL do item
       if (itemUrl !== '#' && itemUrl !== '/') {
         return location.pathname.startsWith(itemUrl)
       }
@@ -69,9 +89,8 @@ export const NavMain = ({
     return location.pathname === subItemUrl
   }
 
-  const handleItemClick = (item: (typeof items)[0]) => {
+  const handleItemClick = (item: NavMainItem) => {
     if (item.items?.length) {
-      // Se tem subitens, alterna o estado de abertura
       setOpenItems((prev) => {
         const newSet = new Set(prev)
         if (newSet.has(item.title)) {
@@ -82,7 +101,6 @@ export const NavMain = ({
         return newSet
       })
     } else {
-      // Se não tem subitens, navega para a URL
       navigate(item.url)
     }
   }

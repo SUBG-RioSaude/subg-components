@@ -24,7 +24,7 @@ export interface NavItem {
 
 export interface LogoConfig {
   /** URL da logo principal */
-  mainLogoUrl?: string
+  mainLogoUrl: string
   /** Texto alternativo da logo */
   mainLogoAlt?: string
   /** URL da logo secundária (badge) */
@@ -39,16 +39,19 @@ export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   /** Itens de navegação */
   navItems: NavItem[]
   /** Configuração de logo */
-  logoConfig?: LogoConfig
+  logoConfig: LogoConfig
   /** Conteúdo customizado do footer */
   footerContent?: React.ReactNode
 }
 
 /**
- * Componente AppSidebar reutilizável
+ * Componente AppSidebar reutilizável baseado em shadcn/ui
  *
  * @example
  * ```tsx
+ * import { AppSidebar } from '@subg-riosaude/subg-components'
+ * import { Home, PenBoxIcon } from 'lucide-react'
+ *
  * <AppSidebar
  *   navItems={[
  *     { title: 'Início', url: '/', icon: Home },
@@ -56,16 +59,20 @@ export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
  *       title: 'Contratos',
  *       url: '/contratos',
  *       icon: PenBoxIcon,
- *       items: [{ title: 'Lista', url: '/contratos' }]
+ *       items: [
+ *         { title: 'Cadastrar Contrato', url: '/contratos/cadastrar' },
+ *         { title: 'Lista de Contratos', url: '/contratos' }
+ *       ]
  *     }
  *   ]}
  *   logoConfig={{
  *     mainLogoUrl: '/logo.png',
- *     mainLogoAlt: 'Logo',
- *     badgeText: 'Sistema',
+ *     mainLogoAlt: 'Logo Prefeitura',
+ *     badgeText: 'CAC',
+ *     badgeLogoUrl: '/badge-logo.png',
  *     logoLink: '/dashboard'
  *   }}
- *   footerContent={<SidebarFooterCustom />}
+ *   footerContent={<CustomFooter />}
  * />
  * ```
  */
@@ -75,15 +82,6 @@ export const AppSidebar = ({
   footerContent,
   ...props
 }: AppSidebarProps) => {
-  const defaultLogoConfig: LogoConfig = {
-    mainLogoUrl: '/logo.png',
-    mainLogoAlt: 'Logo',
-    logoLink: '/',
-    badgeText: 'Sistema',
-  }
-
-  const config = { ...defaultLogoConfig, ...logoConfig }
-
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="h-svh" {...props}>
       <SidebarHeader>
@@ -92,31 +90,31 @@ export const AppSidebar = ({
             <div className="cursor-pointer">
               <div className="flex flex-col items-center space-y-3 group-data-[state=collapsed]:space-y-2">
                 {/* Logo principal */}
-                <Link to={config.logoLink || '/'}>
+                <Link to={logoConfig.logoLink || '/'}>
                   <div className="logo-container relative transition-all duration-500 group-data-[state=collapsed]:scale-75 hover:scale-110">
                     <img
-                      src={config.mainLogoUrl}
-                      alt={config.mainLogoAlt}
+                      src={logoConfig.mainLogoUrl}
+                      alt={logoConfig.mainLogoAlt || 'Logo'}
                       className="h-24 w-52 object-contain drop-shadow-lg transition-all duration-500 group-data-[state=collapsed]:h-24 group-data-[state=collapsed]:w-24"
                     />
                   </div>
                 </Link>
 
-                {/* Badge */}
-                {config.badgeText && (
+                {/* Badge opcional */}
+                {logoConfig.badgeText && (
                   <div className="group-data-[state=collapsed]:hidden">
                     <div className="relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gray-600 px-4 py-2 opacity-80 shadow-md backdrop-blur-md transition-all duration-300 hover:scale-105 hover:opacity-95">
-                      {config.badgeLogoUrl && (
+                      {logoConfig.badgeLogoUrl && (
                         <div className="flex h-[45px] items-center justify-center">
                           <img
-                            src={config.badgeLogoUrl}
+                            src={logoConfig.badgeLogoUrl}
                             alt="Badge"
                             className="h-25 w-25 object-contain opacity-95 drop-shadow-sm"
                           />
                         </div>
                       )}
                       <span className="text-sidebar-foreground ml-[-20px] text-lg font-bold tracking-wider uppercase drop-shadow-sm">
-                        {config.badgeText}
+                        {logoConfig.badgeText}
                       </span>
                       <div className="via-sidebar-foreground/10 absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent to-transparent transition-transform duration-1000 ease-out group-hover/cac:translate-x-full" />
                     </div>

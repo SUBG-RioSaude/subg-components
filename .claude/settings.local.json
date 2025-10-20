@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/src/**)"
+      "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/src/**)",
+      "Read(//c/Users/MATHEUS/Documents/teste33/**)",
+      "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/**)"
     ],
     "deny": [],
     "ask": []
