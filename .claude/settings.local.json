@@ -3,7 +3,8 @@
     "allow": [
       "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/src/**)",
       "Read(//c/Users/MATHEUS/Documents/teste33/**)",
-      "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/**)"
+      "Read(//c/Users/MATHEUS/Documents/Cac-FrontEnd/**)",
+      "Read(//c/Users/MATHEUS/Documents/testeshad/**)"
     ],
     "deny": [],
     "ask": []

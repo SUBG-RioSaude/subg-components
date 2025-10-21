@@ -1,12 +1,29 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'path'
+import { copyFileSync, mkdirSync } from 'fs'
 
 const srcDir = resolve(__dirname, 'src')
 
 export default defineConfig({
   plugins: [
     react(),
+    {
+      name: 'copy-styles',
+      writeBundle() {
+        // Copiar styles.css para dist/
+        try {
+          mkdirSync('dist', { recursive: true })
+          copyFileSync(
+            resolve(srcDir, 'styles.css'),
+            resolve(__dirname, 'dist/styles.css')
+          )
+          console.log('✓ styles.css copiado para dist/')
+        } catch (err) {
+          console.error('Erro ao copiar styles.css:', err)
+        }
+      },
+    },
   ],
   build: {
     lib: {
