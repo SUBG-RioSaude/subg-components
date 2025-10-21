@@ -97,12 +97,9 @@ export const AppSidebar = ({
     }
 
     // Se footerConfig for fornecido, usar SidebarFooterNew
+    // Nota: SidebarFooterNew já tem seu próprio layout, não precisa de wrapper
     if (footerConfig) {
-      return (
-        <SidebarFooter>
-          <SidebarFooterNew {...footerConfig} />
-        </SidebarFooter>
-      )
+      return <SidebarFooterNew {...footerConfig} />
     }
 
     // Sem footer

@@ -18,11 +18,30 @@ Componentes de Sidebar e Breadcrumb reutilizáveis baseados em shadcn/ui para **
 
 ## ✨ Visão Geral
 
-Esta biblioteca fornece:
-- **AppSidebar** - Sidebar completa e responsiva com suporte a colapso e navegação hierárquica
-- **NavMain** - Navegação vertical integrada com React Router
-- **PageBreadcrumb** - Breadcrumbs automáticos baseados na URL
-- **Componentes UI base** - Todos os primitivos do shadcn/ui necessários (Sidebar, Button, Avatar, etc.)
+Esta biblioteca fornece componentes completos e prontos para uso em aplicações React com Tailwind v4.
+
+### 🎯 Componentes Principais
+
+- ✅ **AppSidebar** - Sidebar completa e responsiva com suporte a colapso e navegação hierárquica
+- ✅ **NavUser** - Componente de usuário com avatar, dropdown e ações (Perfil, Configurações, Sair)
+- ✅ **SidebarFooter** - Footer automático com informações de versão, build e usuário
+- ✅ **NavMain** - Navegação vertical integrada com React Router
+- ✅ **PageBreadcrumb** - Breadcrumbs automáticos baseados na URL
+- ✅ **Badge** - Componente de badges com 4 variantes (default, secondary, destructive, outline)
+
+### 🔧 Utilitários
+
+- ✅ **Sistema de Versão** - Funções para obter metadata de build (versão, commit SHA, build number, ambiente)
+- ✅ **Componentes UI base** - Todos os primitivos do shadcn/ui necessários (Sidebar, Button, Avatar, Tooltip, etc.)
+
+### ⚡ Features
+
+- ✅ **Footer configurável** - 3 modos: com usuário e versão, apenas versão, ou totalmente customizado
+- ✅ **Navegação hierárquica** - Suporta menu com múltiplos níveis de subitens
+- ✅ **Responsivo** - Adapta-se automaticamente para mobile com drawer
+- ✅ **Modo colapsado** - Sidebar pode ser minimizada para ícones
+- ✅ **Dark mode ready** - Variáveis CSS preparadas para tema escuro
+- ✅ **Tooltips informativos** - Build info detalhado com badges de ambiente
 
 **Diferencial:** Todos os componentes são **autônomos** e funcionam com **Tailwind CSS v4** sem precisar do shadcn/ui instalado.
 
