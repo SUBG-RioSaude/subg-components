@@ -148,6 +148,7 @@ export function SidebarFooter({
               <TooltipContent
                 side="right"
                 className="border-gray-200 bg-white text-gray-900 shadow-lg"
+                arrowClassName={ambienteColors.arrow}
               >
                 {tooltipContent}
               </TooltipContent>
