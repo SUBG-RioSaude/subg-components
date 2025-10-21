@@ -172,17 +172,57 @@ export default {
 
 ---
 
-## 📖 Uso Básico
+## 📖 Exemplos de Uso
 
-### Exemplo Completo de Layout
+### 🟢 Exemplo 1: Básico (Mínimo)
+
+Sidebar simples sem footer, apenas navegação essencial.
 
 ```tsx
 import { SidebarProvider, SidebarInset } from '@/ui/sidebar'
 import { AppSidebar } from '@/components/navigation/app-sidebar'
-import { PageBreadcrumb } from '@/components/navigation/page-breadcrumb'
-import { Home, Settings, Users } from 'lucide-react'
+import { Home, FileText } from 'lucide-react'
 
-export function MainLayout({ children }: { children: React.ReactNode }) {
+export function BasicLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <AppSidebar
+        navItems={[
+          { title: 'Início', url: '/', icon: Home },
+          { title: 'Documentos', url: '/docs', icon: FileText },
+        ]}
+        logoConfig={{
+          mainLogoUrl: '/logo.png',
+          mainLogoAlt: 'Logo',
+        }}
+      />
+
+      <SidebarInset>
+        <main className="p-6">
+          {children}
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+```
+
+---
+
+### 🟡 Exemplo 2: Intermediário
+
+Sidebar com navegação hierárquica, breadcrumbs e footer com versão.
+
+```tsx
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/ui/sidebar'
+import { AppSidebar } from '@/components/navigation/app-sidebar'
+import { PageBreadcrumb } from '@/components/navigation/page-breadcrumb'
+import { Home, Settings, Users, FileText } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+
+export function IntermediateLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate()
+
   const navItems = [
     { title: 'Início', url: '/', icon: Home },
     {
@@ -195,32 +235,36 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
       ],
     },
     { title: 'Usuários', url: '/users', icon: Users },
+    { title: 'Documentos', url: '/docs', icon: FileText },
   ]
-
-  const logoConfig = {
-    mainLogoUrl: '/logo.png',
-    mainLogoAlt: 'Minha Logo',
-    badgeText: 'ADMIN',
-    badgeLogoUrl: '/badge.png',
-    logoLink: '/dashboard',
-  }
 
   return (
     <SidebarProvider>
       <AppSidebar
         navItems={navItems}
-        logoConfig={logoConfig}
-        footerContent={<Footer />}
+        logoConfig={{
+          mainLogoUrl: '/logo.png',
+          mainLogoAlt: 'Minha Logo',
+          badgeText: 'BETA',
+          logoLink: '/dashboard',
+        }}
+        footerConfig={{
+          showVersion: true,
+          developerText: 'Desenvolvido com ❤️ pela equipe',
+        }}
       />
 
       <SidebarInset>
-        {/* Header com Breadcrumb */}
+        {/* Header com Breadcrumb e Toggle */}
         <header className="sticky top-0 z-10 flex h-16 items-center gap-2 border-b bg-white px-4">
+          <SidebarTrigger />
           <PageBreadcrumb
             labelMap={{
               'settings': 'Configurações',
               'users': 'Usuários',
+              'docs': 'Documentos',
               'profile': 'Perfil',
+              'preferences': 'Preferências',
             }}
           />
         </header>
@@ -233,14 +277,219 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
     </SidebarProvider>
   )
 }
+```
 
-const Footer = () => (
-  <div className="border-t p-4">
-    <p className="text-center text-xs text-gray-500">
-      © 2025 Sua Empresa
-    </p>
-  </div>
-)
+---
+
+### 🔴 Exemplo 3: Completo (Todas as Features)
+
+Sidebar com **todas as props**, usuário autenticado, versão, badges e navegação completa.
+
+```tsx
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger
+} from '@/ui/sidebar'
+import { AppSidebar } from '@/components/navigation/app-sidebar'
+import { PageBreadcrumb } from '@/components/navigation/page-breadcrumb'
+import { Badge } from '@/ui/badge'
+import {
+  Home,
+  Settings,
+  Users,
+  FileText,
+  BarChart3,
+  Package,
+  CreditCard,
+  Bell,
+  HelpCircle,
+} from 'lucide-react'
+
+export function CompleteLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate()
+  const [user] = useState({
+    name: 'Matheus Migliani',
+    email: 'matheus@subg.rio',
+    avatar: '/avatars/matheus.jpg',
+  })
+
+  // Navegação completa com hierarquia
+  const navItems = [
+    {
+      title: 'Dashboard',
+      url: '/',
+      icon: Home
+    },
+    {
+      title: 'Relatórios',
+      url: '/reports',
+      icon: BarChart3,
+      items: [
+        { title: 'Vendas', url: '/reports/sales' },
+        { title: 'Financeiro', url: '/reports/financial' },
+        { title: 'Analytics', url: '/reports/analytics' },
+      ],
+    },
+    {
+      title: 'Produtos',
+      url: '/products',
+      icon: Package,
+      items: [
+        { title: 'Catálogo', url: '/products/catalog' },
+        { title: 'Estoque', url: '/products/inventory' },
+        { title: 'Fornecedores', url: '/products/suppliers' },
+      ],
+    },
+    {
+      title: 'Clientes',
+      url: '/customers',
+      icon: Users,
+      items: [
+        { title: 'Lista', url: '/customers/list' },
+        { title: 'Novo Cliente', url: '/customers/new' },
+      ],
+    },
+    {
+      title: 'Financeiro',
+      url: '/finance',
+      icon: CreditCard,
+      items: [
+        { title: 'Faturas', url: '/finance/invoices' },
+        { title: 'Pagamentos', url: '/finance/payments' },
+        { title: 'Cobranças', url: '/finance/billing' },
+      ],
+    },
+    {
+      title: 'Documentos',
+      url: '/docs',
+      icon: FileText
+    },
+    {
+      title: 'Configurações',
+      url: '/settings',
+      icon: Settings,
+      items: [
+        { title: 'Perfil', url: '/settings/profile' },
+        { title: 'Conta', url: '/settings/account' },
+        { title: 'Notificações', url: '/settings/notifications' },
+        { title: 'Segurança', url: '/settings/security' },
+        { title: 'Integrações', url: '/settings/integrations' },
+      ],
+    },
+  ]
+
+  // Handlers de ações do usuário
+  const handleLogout = () => {
+    console.log('Logging out...')
+    // Lógica de logout
+    navigate('/login')
+  }
+
+  const handleProfile = () => {
+    navigate('/settings/profile')
+  }
+
+  const handleSettings = () => {
+    navigate('/settings')
+  }
+
+  return (
+    <SidebarProvider defaultOpen={true}>
+      <AppSidebar
+        // Navegação
+        navItems={navItems}
+
+        // Logo com badge
+        logoConfig={{
+          mainLogoUrl: '/logo-prefeitura.png',
+          mainLogoAlt: 'Logo Prefeitura do Rio',
+          badgeText: 'CAC',
+          badgeLogoUrl: '/logo-cac.png',
+          logoLink: '/dashboard',
+        }}
+
+        // Footer completo com usuário e versão
+        footerConfig={{
+          userConfig: {
+            user,
+            onLogout: handleLogout,
+            onProfile: handleProfile,
+            onSettings: handleSettings,
+          },
+          showVersion: true,
+          developerText: 'Desenvolvido pela SUBG',
+        }}
+
+        // Props adicionais da Sidebar (shadcn)
+        variant="sidebar"
+        collapsible="icon"
+        className="border-r"
+      />
+
+      <SidebarInset>
+        {/* Header com todos os recursos */}
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-white px-4 shadow-sm">
+          <div className="flex items-center gap-2">
+            {/* Toggle da sidebar */}
+            <SidebarTrigger />
+
+            {/* Breadcrumb */}
+            <PageBreadcrumb
+              labelMap={{
+                'reports': 'Relatórios',
+                'sales': 'Vendas',
+                'financial': 'Financeiro',
+                'analytics': 'Analytics',
+                'products': 'Produtos',
+                'catalog': 'Catálogo',
+                'inventory': 'Estoque',
+                'suppliers': 'Fornecedores',
+                'customers': 'Clientes',
+                'list': 'Lista',
+                'new': 'Novo',
+                'finance': 'Financeiro',
+                'invoices': 'Faturas',
+                'payments': 'Pagamentos',
+                'billing': 'Cobranças',
+                'docs': 'Documentos',
+                'settings': 'Configurações',
+                'profile': 'Perfil',
+                'account': 'Conta',
+                'notifications': 'Notificações',
+                'security': 'Segurança',
+                'integrations': 'Integrações',
+              }}
+            />
+          </div>
+
+          {/* Actions no header */}
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="hidden md:flex">
+              Ambiente: Produção
+            </Badge>
+
+            <button className="relative p-2 hover:bg-gray-100 rounded-md">
+              <Bell className="h-5 w-5" />
+              <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
+            </button>
+
+            <button className="p-2 hover:bg-gray-100 rounded-md">
+              <HelpCircle className="h-5 w-5" />
+            </button>
+          </div>
+        </header>
+
+        {/* Conteúdo Principal */}
+        <main className="flex-1 overflow-auto p-6 bg-gray-50">
+          {children}
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
 ```
 
 ---
