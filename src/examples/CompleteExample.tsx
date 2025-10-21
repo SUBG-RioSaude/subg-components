@@ -5,7 +5,7 @@ import {
   SidebarTrigger,
 } from '../ui/sidebar'
 import { AppSidebar } from '../components/navigation/app-sidebar'
-import { PageBreadcrumb } from '../components/navigation/page-breadcrumb'
+import PageBreadcrumb from '../components/navigation/page-breadcrumb'
 import { Badge } from '../ui/badge'
 import {
   Home,
