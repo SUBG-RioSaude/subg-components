@@ -54,12 +54,15 @@ Copie os seguintes arquivos do repositório para o seu projeto:
     │   └── navigation/
     │       ├── app-sidebar.tsx     ← Sidebar principal
     │       ├── nav-main.tsx        ← Menu de navegação
+    │       ├── nav-user.tsx        ← Componente de usuário
+    │       ├── sidebar-footer.tsx  ← Footer com versão
     │       └── page-breadcrumb.tsx ← Breadcrumbs
     │
     ├── ui/                         ← Componentes base shadcn/ui
     │   ├── sidebar.tsx
     │   ├── separator.tsx
     │   ├── button.tsx
+    │   ├── badge.tsx               ← Badges
     │   ├── avatar.tsx
     │   ├── collapsible.tsx
     │   ├── dropdown-menu.tsx
@@ -68,6 +71,9 @@ Copie os seguintes arquivos do repositório para o seu projeto:
     │   ├── sheet.tsx
     │   ├── skeleton.tsx
     │   └── input.tsx
+    │
+    ├── lib/
+    │   └── versao.ts               ← Funções de versão/build
     │
     ├── utils/
     │   └── cn.ts                   ← Utilitário de classes
@@ -269,7 +275,46 @@ Edite as variáveis CSS no seu `index.css`:
 />
 ```
 
-### Footer Customizado
+### Footer com Usuário e Versão
+
+A sidebar agora suporta um footer completo com informações de usuário e versão:
+
+#### **Opção 1: Footer automático com `footerConfig`**
+
+```tsx
+<AppSidebar
+  navItems={navItems}
+  logoConfig={logoConfig}
+  footerConfig={{
+    userConfig: {
+      user: {
+        name: 'João Silva',
+        email: 'joao@example.com',
+        avatar: '/avatar.jpg'
+      },
+      onLogout: () => handleLogout(),
+      onProfile: () => navigate('/profile'),
+      onSettings: () => navigate('/settings'),
+    },
+    showVersion: true,  // Mostra versão e build info
+    developerText: 'Desenvolvido pelo time de TI 2025'
+  }}
+/>
+```
+
+#### **Opção 2: Apenas versão, sem usuário**
+
+```tsx
+<AppSidebar
+  navItems={navItems}
+  logoConfig={logoConfig}
+  footerConfig={{
+    showVersion: true
+  }}
+/>
+```
+
+#### **Opção 3: Footer totalmente customizado**
 
 ```tsx
 <AppSidebar
@@ -284,6 +329,35 @@ Edite as variáveis CSS no seu `index.css`:
 />
 ```
 
+### Configurar Variáveis de Versão
+
+O footer com `showVersion: true` exibe informações de build obtidas de variáveis de ambiente.
+
+**1. Crie um arquivo `.env` na raiz do projeto:**
+
+```env
+VITE_APP_VERSION=1.0.0
+VITE_COMMIT_SHA=abc1234
+VITE_BUILD_NUMBER=42
+VITE_BUILD_TIMESTAMP=2025-10-21T12:00:00Z
+VITE_AMBIENTE=production
+```
+
+**2. Configure no CI/CD (exemplo GitHub Actions):**
+
+```yaml
+- name: Build
+  env:
+    VITE_APP_VERSION: ${{ github.ref_name }}
+    VITE_COMMIT_SHA: ${{ github.sha }}
+    VITE_BUILD_NUMBER: ${{ github.run_number }}
+    VITE_BUILD_TIMESTAMP: ${{ github.event.head_commit.timestamp }}
+    VITE_AMBIENTE: production
+  run: pnpm build
+```
+
+Se as variáveis não forem definidas, o sistema usa valores padrão (versão 1.0.0, build "local", etc.).
+
 ---
 
 ## 📚 API de Componentes
@@ -294,7 +368,8 @@ Edite as variáveis CSS no seu `index.css`:
 |------|------|-----------|
 | `navItems` | `NavItem[]` | Lista de itens de navegação (requerido) |
 | `logoConfig` | `LogoConfig` | Configuração da logo (requerido) |
-| `footerContent` | `ReactNode` | Conteúdo customizado do footer (opcional) |
+| `footerConfig` | `SidebarFooterProps` | Configuração automática do footer com versão e usuário (opcional) |
+| `footerContent` | `ReactNode` | Conteúdo totalmente customizado do footer (opcional, alternativa ao footerConfig) |
 
 #### `NavItem`
 ```ts
@@ -317,6 +392,49 @@ interface LogoConfig {
 }
 ```
 
+#### `SidebarFooterProps`
+```ts
+interface SidebarFooterProps {
+  userConfig?: {
+    user?: {
+      name: string
+      email: string
+      avatar?: string
+    }
+    onLogout?: () => void
+    onProfile?: () => void
+    onSettings?: () => void
+  }
+  showVersion?: boolean       // Padrão: true
+  developerText?: string      // Texto customizado do desenvolvedor
+}
+```
+
+### `NavUser`
+
+Componente standalone para exibir usuário com dropdown de ações.
+
+| Prop | Tipo | Descrição |
+|------|------|-----------|
+| `user` | `{ name, email, avatar? }` | Dados do usuário (opcional, mostra placeholder se omitido) |
+| `onLogout` | `() => void` | Callback ao clicar em "Sair" (opcional) |
+| `onProfile` | `() => void` | Callback ao clicar em "Perfil" (opcional) |
+| `onSettings` | `() => void` | Callback ao clicar em "Configurações" (opcional) |
+
+### `Badge`
+
+Componente de badge baseado em shadcn/ui.
+
+| Prop | Tipo | Valores | Descrição |
+|------|------|---------|-----------|
+| `variant` | `string` | `default`, `secondary`, `destructive`, `outline` | Variante visual do badge |
+
+**Exemplo:**
+```tsx
+<Badge variant="default">Novo</Badge>
+<Badge variant="destructive">Erro</Badge>
+```
+
 ### `PageBreadcrumb`
 
 | Prop | Tipo | Descrição |
@@ -331,6 +449,27 @@ interface LogoConfig {
 | `defaultOpen` | `boolean` | Estado inicial da sidebar (padrão: `true`) |
 | `open` | `boolean` | Controle externo do estado (opcional) |
 | `onOpenChange` | `(open: boolean) => void` | Callback ao mudar estado (opcional) |
+
+### Funções de Versão
+
+```ts
+// Obtém versão da aplicação
+obterVersaoApp(): string
+
+// Obtém ano atual
+obterAnoAtual(): number
+
+// Obtém metadata completa
+obterMetadataVersao(): MetadataVersao
+
+interface MetadataVersao {
+  versao: string
+  buildNumber: string
+  commitSha: string
+  buildTimestamp: string
+  ambiente: 'development' | 'staging' | 'production'
+}
+```
 
 ---
 
