@@ -43,4 +43,77 @@
     transition-duration: 200ms;
     transition-timing-function: ease-linear;
   }
+
+  /* Esconde scrollbar mas mantém funcionalidade */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE e Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Componentes customizados */
+@layer components {
+  /* Melhorias visuais para o SidebarTrigger */
+  [data-sidebar='trigger'] {
+    @apply relative;
+  }
+
+  [data-sidebar='trigger']:hover {
+    @apply scale-105;
+  }
+
+  [data-sidebar='trigger']:active {
+    @apply scale-95;
+  }
+
+  [data-sidebar='trigger']:focus-visible {
+    @apply ring-sidebar-ring ring-2 ring-offset-2;
+  }
+
+  /* Melhorias visuais para a logo da sidebar */
+  .group\/logo:focus-visible {
+    @apply ring-sidebar-primary ring-offset-sidebar rounded-xl ring-2 ring-offset-2;
+  }
+
+  .group\/logo:active .logo-container {
+    @apply scale-95;
+  }
+
+  /* Efeitos especiais para a badge CAC */
+  .group\/logo:hover .badge-cac {
+    @apply scale-105 shadow-xl;
+  }
+
+  .badge-cac {
+    @apply transition-all duration-300;
+  }
+
+  /* Logo sem animações - limpa e estática */
+  .logo-container {
+    /* Removidas todas as animações de pulsação e brilho */
+  }
+
+  /* Animação de spin customizada para a logo da badge */
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+}
+
+/* Animações customizadas */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+    opacity: 0;
+  }
 }

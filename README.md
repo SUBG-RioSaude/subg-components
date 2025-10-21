@@ -42,14 +42,15 @@ Esta biblioteca fornece componentes completos e prontos para uso em aplicações
 - ✅ **Modo colapsado** - Sidebar pode ser minimizada para ícones
 - ✅ **Dark mode ready** - Variáveis CSS preparadas para tema escuro
 - ✅ **Tooltips informativos** - Build info detalhado com badges de ambiente
-
-**Diferencial:** Todos os componentes são **autônomos** e funcionam com **Tailwind CSS v4** sem precisar do shadcn/ui instalado.
+- ✅ **Animações sofisticadas** - Efeitos de hover, transições suaves e indicadores visuais
+- ✅ **Indicador de status online** - Animação de pulsação com múltiplas camadas no avatar do usuário
+- ✅ **Efeitos visuais premium** - Gradientes animados, brilho, e transformações responsivas
 
 ---
 
 ## 🚀 Instalação (Copy-Paste)
 
-Seguindo o modelo do shadcn/ui, você **copia os componentes diretamente** para o seu projeto ao invés de instalar via NPM.
+Você **copia os componentes diretamente** para o seu projeto ao invés de instalar via NPM.
 
 ### 1️⃣ **Instalar dependências base**
 
@@ -77,7 +78,7 @@ Copie os seguintes arquivos do repositório para o seu projeto:
     │       ├── sidebar-footer.tsx  ← Footer com versão
     │       └── page-breadcrumb.tsx ← Breadcrumbs
     │
-    ├── ui/                         ← Componentes base shadcn/ui
+    ├── ui/                         ← Componentes base UI
     │   ├── sidebar.tsx
     │   ├── separator.tsx
     │   ├── button.tsx
@@ -425,7 +426,8 @@ export function CompleteLayout({ children }: { children: React.ReactNode }) {
         logoConfig={{
           mainLogoUrl: '/logo-prefeitura.png',
           mainLogoAlt: 'Logo Prefeitura do Rio',
-          badgeText: 'CAC',
+          badgeText: 'CAC 360',
+          badgeSubtext: 'Análise de Contratos',
           badgeLogoUrl: '/logo-cac.png',
           logoLink: '/dashboard',
         }}
@@ -514,6 +516,42 @@ export function CompleteLayout({ children }: { children: React.ReactNode }) {
 ---
 
 ## 🎨 Customização
+
+### Animações e Efeitos Visuais
+
+Os componentes incluem animações sofisticadas prontas para uso:
+
+#### **NavUser - Efeitos de Interação**
+- **Efeito de brilho animado**: Gradiente que se move ao passar o mouse
+- **Luz ambiente suave**: Gradiente sutil que aparece no hover
+- **Indicador de status online**: Avatar com pulsação em múltiplas camadas (anel externo, médio e núcleo)
+- **Transformações suaves**: Elementos que se movem e escalam com transições suaves
+- **Ícone rotativo**: ChevronsUpDown que gira 180° ao abrir o dropdown
+
+#### **AppSidebar - Badge CAC**
+- **Layout com duas linhas**: Suporta título e subtexto na badge
+- **Separador visual**: Linha divisória antes da badge
+- **Efeito de hover**: Escala e opacidade que aumentam ao passar o mouse
+- **Efeito de brilho**: Gradiente animado que atravessa a badge
+
+#### **CSS Customizadas Incluídas**
+```css
+/* Animação de shimmer para efeitos de brilho */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(45deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%) rotate(45deg); opacity: 0; }
+}
+
+/* Esconder scrollbar mantendo funcionalidade */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; }
+
+/* Animação lenta de spin */
+.animate-spin-slow { animation: spin 8s linear infinite; }
+```
+
+Todas essas animações são **responsivas ao estado** da sidebar (expandida/colapsada) usando `group-data-[state=collapsed]` do Tailwind.
 
 ### Alterar cores da Sidebar
 
@@ -655,7 +693,8 @@ interface LogoConfig {
   mainLogoUrl: string         // URL da logo principal
   mainLogoAlt?: string        // Texto alternativo
   badgeLogoUrl?: string       // URL da logo da badge
-  badgeText?: string          // Texto da badge (ex: "CAC")
+  badgeText?: string          // Texto da badge (ex: "CAC 360")
+  badgeSubtext?: string       // Subtexto da badge (ex: "Análise de Contratos")
   logoLink?: string           // Link ao clicar na logo
 }
 ```
@@ -691,7 +730,7 @@ Componente standalone para exibir usuário com dropdown de ações.
 
 ### `Badge`
 
-Componente de badge baseado em shadcn/ui.
+Componente de badge reutilizável.
 
 | Prop | Tipo | Valores | Descrição |
 |------|------|---------|-----------|

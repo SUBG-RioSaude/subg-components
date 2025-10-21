@@ -35,6 +35,8 @@ export interface LogoConfig {
   badgeLogoUrl?: string
   /** Texto da badge */
   badgeText?: string
+  /** Subtexto da badge (linha adicional) */
+  badgeSubtext?: string
   /** Link ao clicar na logo */
   logoLink?: string
 }
@@ -113,7 +115,7 @@ export const AppSidebar = ({
           <SidebarMenuItem>
             <div className="cursor-pointer">
               <div className="flex flex-col items-center space-y-3 group-data-[state=collapsed]:space-y-2">
-                {/* Logo principal */}
+                {/* Logo principal limpa - sem quadrado */}
                 <Link to={logoConfig.logoLink || '/'}>
                   <div className="logo-container relative transition-all duration-500 group-data-[state=collapsed]:scale-75 hover:scale-110">
                     <img
@@ -124,22 +126,35 @@ export const AppSidebar = ({
                   </div>
                 </Link>
 
-                {/* Badge opcional */}
+                {/* Badge CAC redesenhada com ícone maior */}
                 {logoConfig.badgeText && (
-                  <div className="group-data-[state=collapsed]:hidden">
-                    <div className="relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gray-600 px-4 py-2 opacity-80 shadow-md backdrop-blur-md transition-all duration-300 hover:scale-105 hover:opacity-95">
+                  <div className="group-data-[state=collapsed]:hidden w-full">
+                    <div className="px-4 py-3">
+                      <Separator className="bg-sidebar-border/50" />
+                    </div>
+                    <div className="flex gap-8 items-center overflow-hidden rounded-md bg-gray-600 px-4 py-2 opacity-80 transition-all duration-300 hover:scale-105 hover:opacity-95">
                       {logoConfig.badgeLogoUrl && (
                         <div className="flex h-[45px] items-center justify-center">
                           <img
                             src={logoConfig.badgeLogoUrl}
-                            alt="Badge"
-                            className="h-25 w-25 object-contain opacity-95 drop-shadow-sm"
+                            alt="Logo CAC"
+                            className="h-10 w-10 object-contain opacity-95 drop-shadow-sm"
+                            style={{ animationDuration: '6s' }}
                           />
                         </div>
                       )}
-                      <span className="text-sidebar-foreground ml-[-20px] text-lg font-bold tracking-wider uppercase drop-shadow-sm">
-                        {logoConfig.badgeText}
-                      </span>
+                      {/* Texto CAC */}
+                      <div className='flex flex-col'>
+                        <span className="text-sidebar-foreground ml-[-20px] text-md font-bold tracking-wider uppercase drop-shadow-sm">
+                          {logoConfig.badgeText}
+                        </span>
+                        {logoConfig.badgeSubtext && (
+                          <span className="text-sidebar-foreground ml-[-20px] text-sm tracking-wider drop-shadow-sm">
+                            {logoConfig.badgeSubtext}
+                          </span>
+                        )}
+                      </div>
+                      {/* Efeito de brilho animado */}
                       <div className="via-sidebar-foreground/10 absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent to-transparent transition-transform duration-1000 ease-out group-hover/cac:translate-x-full" />
                     </div>
                   </div>
