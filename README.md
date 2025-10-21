@@ -52,16 +52,30 @@ Esta biblioteca fornece componentes completos e prontos para uso em aplicações
 
 Você **copia os componentes diretamente** para o seu projeto ao invés de instalar via NPM.
 
-### 1️⃣ **Instalar dependências base**
+### 1️⃣ **Instalar componentes do Shadcn/UI**
+
+Use o CLI do Shadcn para instalar os componentes base necessários:
 
 ```bash
-pnpm add @radix-ui/react-avatar @radix-ui/react-collapsible \
-         @radix-ui/react-dropdown-menu @radix-ui/react-separator \
-         @radix-ui/react-slot @radix-ui/react-tooltip \
-         @radix-ui/react-dialog \
-         class-variance-authority clsx tailwind-merge \
-         lucide-react react-router-dom
+# Instalar componentes UI via Shadcn CLI
+pnpm dlx shadcn@latest add sidebar
+pnpm dlx shadcn@latest add button
+pnpm dlx shadcn@latest add avatar
+pnpm dlx shadcn@latest add dropdown-menu
+pnpm dlx shadcn@latest add tooltip
+pnpm dlx shadcn@latest add badge
+pnpm dlx shadcn@latest add breadcrumb
+pnpm dlx shadcn@latest add separator
+pnpm dlx shadcn@latest add sheet
+pnpm dlx shadcn@latest add skeleton
+pnpm dlx shadcn@latest add input
+pnpm dlx shadcn@latest add collapsible
+
+# Instalar dependências adicionais (não incluídas no Shadcn)
+pnpm add lucide-react react-router-dom
 ```
+
+> **Nota:** O Shadcn CLI já instala automaticamente as dependências do Radix UI necessárias para cada componente, junto com as utilidades `class-variance-authority`, `clsx` e `tailwind-merge`.
 
 ### 2️⃣ **Copiar os arquivos de componentes**
 
