@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { NavMain } from './nav-main'
 import {
+  SidebarFooter as SidebarFooterNew,
+  type SidebarFooterProps,
+} from './sidebar-footer'
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -40,7 +44,9 @@ export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   navItems: NavItem[]
   /** Configuração de logo */
   logoConfig: LogoConfig
-  /** Conteúdo customizado do footer */
+  /** Configuração do footer com versão e usuário */
+  footerConfig?: SidebarFooterProps
+  /** Conteúdo customizado do footer (alternativa ao footerConfig) */
   footerContent?: React.ReactNode
 }
 
@@ -79,9 +85,30 @@ export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 export const AppSidebar = ({
   navItems,
   logoConfig,
+  footerConfig,
   footerContent,
   ...props
 }: AppSidebarProps) => {
+  // Renderizar footer
+  const renderFooter = () => {
+    // Se footerContent for fornecido, usar ele (modo custom)
+    if (footerContent) {
+      return <SidebarFooter>{footerContent}</SidebarFooter>
+    }
+
+    // Se footerConfig for fornecido, usar SidebarFooterNew
+    if (footerConfig) {
+      return (
+        <SidebarFooter>
+          <SidebarFooterNew {...footerConfig} />
+        </SidebarFooter>
+      )
+    }
+
+    // Sem footer
+    return null
+  }
+
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="h-svh" {...props}>
       <SidebarHeader>
@@ -134,7 +161,7 @@ export const AppSidebar = ({
         <NavMain items={navItems} />
       </SidebarContent>
 
-      {footerContent && <SidebarFooter>{footerContent}</SidebarFooter>}
+      {renderFooter()}
     </Sidebar>
   )
 }

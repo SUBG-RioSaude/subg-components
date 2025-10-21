@@ -17,6 +17,12 @@ export type {
 export { NavMain } from './components/navigation/nav-main'
 export type { NavMainProps, NavMainItem } from './components/navigation/nav-main'
 
+export { NavUser } from './components/navigation/nav-user'
+export type { NavUserProps } from './components/navigation/nav-user'
+
+export { SidebarFooter as SidebarFooterCustom } from './components/navigation/sidebar-footer'
+export type { SidebarFooterProps } from './components/navigation/sidebar-footer'
+
 export { default as PageBreadcrumb } from './components/navigation/page-breadcrumb'
 export type {
   PageBreadcrumbProps,
@@ -60,6 +66,7 @@ export {
 
 export { Separator } from './ui/separator'
 export { Button } from './ui/button'
+export { Badge } from './ui/badge'
 export { Avatar, AvatarImage, AvatarFallback } from './ui/avatar'
 export {
   Tooltip,
@@ -96,3 +103,14 @@ export {
 
 export { cn } from './utils/cn'
 export { useIsMobile } from './hooks/use-mobile'
+
+// ============================================================================
+// Funções de Versão
+// ============================================================================
+
+export {
+  obterVersaoApp,
+  obterAnoAtual,
+  obterMetadataVersao,
+} from './lib/versao'
+export type { MetadataVersao } from './lib/versao'
