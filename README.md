@@ -32,6 +32,9 @@ Cada sistema consumidor cria um adapter local para conectar seu fluxo real de au
 
 ```txt
 src/
+  assets/
+    logo-prefeitura.png
+    sus_logo.png
   index.ts
   components/
     LoginScreen.tsx
@@ -63,6 +66,14 @@ Contém os tipos de status, ações, marca, textos e props.
 Guarda a marca e os textos padrão.
 
 Pode ser sobrescrito pelo sistema consumidor usando as props `brand` e `copy`.
+
+Os logos padrão são importados de `src/assets`, então o componente já funciona com a identidade visual inicial sem exigir que o consumidor copie imagens para a pasta `public`.
+
+### `src/assets/logo-prefeitura.png` e `src/assets/sus_logo.png`
+
+Arquivos de imagem usados pela configuração padrão do login.
+
+Quando o consumidor informar `brand.logos`, esses assets deixam de ser usados e os logos do sistema consumidor assumem a renderização.
 
 ### `src/components/LoginScreen.tsx`
 

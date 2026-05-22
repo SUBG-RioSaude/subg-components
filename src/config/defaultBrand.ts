@@ -1,4 +1,6 @@
 import type { LoginBrandConfig, LoginCopyConfig } from '../types'
+import logoPrefeituraUrl from '../assets/logo-prefeitura.png'
+import susLogoUrl from '../assets/sus_logo.png'
 
 export const defaultLoginBrand: LoginBrandConfig = {
   eyebrow: 'Gestão de Agendamentos',
@@ -8,8 +10,8 @@ export const defaultLoginBrand: LoginBrandConfig = {
     'Organize solicitações, gerencie salas e acompanhe aprovações em um ambiente unificado para toda a secretaria.',
   onlineLabel: 'Sistema online',
   logos: [
-    { src: '/logo-prefeitura.png', alt: 'Prefeitura do Rio' },
-    { src: '/sus_logo.png', alt: 'SUS - Sistema Único de Saúde' },
+    { src: logoPrefeituraUrl, alt: 'Prefeitura do Rio' },
+    { src: susLogoUrl, alt: 'SUS - Sistema Único de Saúde' },
   ],
   metrics: [
     { label: 'Salas', description: 'Cadastro e gestão' },
