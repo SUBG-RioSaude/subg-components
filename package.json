@@ -1,0 +1,48 @@
+{
+  "name": "@subg-dev/rio-geometric-pattern",
+  "version": "0.1.0",
+  "description": "Componente React reutilizavel para o padrao geometrico institucional do Rio",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
+  },
+  "keywords": [
+    "react",
+    "tailwind",
+    "rio",
+    "subg",
+    "prefeitura",
+    "geometric-pattern"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SUBG-RioSaude/subg-components.git"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react-swc": "^4.1.0",
+    "tailwindcss": "^4.1.15",
+    "typescript": "^5.8.0",
+    "vite": "^7.0.0"
+  },
+  "packageManager": "pnpm@10.0.0"
+}
